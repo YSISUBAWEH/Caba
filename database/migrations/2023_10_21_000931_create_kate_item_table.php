@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,19 +21,16 @@ return new class extends Migration
             $table->id();
             $table->string('kode_uk')->unique();
             $table->string('name')->unique();
-            $table->string('harga');
-            $table->string('kode_kate'); // Kolom 'kode_kate' sebagai kunci asing
             $table->timestamps();
-
-            $table->foreign('kode_kate')->references('kode_kate')->on('kategori');
         });
 
         // Membuat tabel 'item' dengan kolom 'kode_kate' dan 'kode_uk' sebagai kunci asing
         Schema::create('item', function (Blueprint $table) {
-            $table->id();
+            $table->string('id')->unique()->primary();
             $table->string('name')->unique();
-            $table->string('kode_item')->unique();
             $table->string('img');
+            $table->string('harga');
+            $table->string('stok');
             $table->string('kode_kate'); // Kolom 'kode_kate' sebagai kunci asing
             $table->string('kode_uk');   // Kolom 'kode_uk' sebagai kunci asing
             $table->timestamps();

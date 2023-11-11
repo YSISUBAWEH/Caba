@@ -10,18 +10,21 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('transaksi', function (Blueprint $table) {
-            $table->id(); 
-            $table->string('nomor_transaksi')->unique();
-            $table->integer('total_pembayaran');
-            $table->integer('uang_pembayaran');
-            $table->integer('kembalian');
-            $table->timestamp('tanggal_pembayaran');
-            $table->string('metode_pembayaran');
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('transaksi', function (Blueprint $table) {
+        $table->string('id')->unique()->primary();
+        $table->unsignedBigInteger('users_id'); // Ubah tipe data menjadi unsignedBigInteger
+        $table->integer('total_pembayaran');
+        $table->integer('uang_pembayaran');
+        $table->integer('kembalian');
+        $table->timestamp('tanggal_pembayaran');
+        $table->string('metode_pembayaran');
+        $table->timestamps();
+
+        $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
+    });
+}
+
 
     /**
      * Reverse the migrations.

@@ -13,16 +13,18 @@ return new class extends Migration
     {
         Schema::create('item_transaksi', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_item');
-            $table->string('nomor_transaksi');
+            $table->string('item_id');
+            $table->string('transaksi_id');
             $table->integer('quantity');
             $table->integer('harga');
             $table->timestamps();
         
-            $table->index(['kode_item', 'nomor_transaksi']);
-        
-            $table->foreign('kode_item')->references('kode_item')->on('item')->onDelete('cascade');
-            $table->foreign('nomor_transaksi')->references('nomor_transaksi')->on('transaksi')->onDelete('cascade');        
+            $table->index('item_id');
+            $table->index('transaksi_id');
+
+            $table->foreign('item_id')->references('id')->on('item')->onDelete('cascade');
+            $table->foreign('transaksi_id')->references('id')->on('transaksi')->onDelete('cascade');
+      
         });
     }
 

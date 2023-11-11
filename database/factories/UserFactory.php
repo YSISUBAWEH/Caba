@@ -20,7 +20,7 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'username' => $this->faker->unique()->username(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => '$2y$10$.9JZpZvLyU4lEGIZ4gwQQuOCaYE0uQV7ZNbX6ahgSO10W5tU8aKyS', // 1
             'foto' => $this->faker->randomElement(['face1.jpg', 'face4.jpg', 'face7.jpg', 'face8.jpg', 'face13.jpg']),
 
             // tambahkan baris diawah ini
