@@ -114,7 +114,7 @@
                             <h3 class="header-title wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.2s"><span>Selamat Datang di</span><br> BaBa Kasir</h3>
                             <p class="text wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.6s">Dimana segalanya lebih mudah, lebih cepat, dan lebih efisien!</p>
                             <ul class="d-flex">
-                                <li><a href="https://rebrand.ly/appland-ud" rel="nofollow" class="main-btn wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.8s">Mulai Sekarang</a></li>
+                                <li><a href="{{route('register')}}" rel="nofollow" class="main-btn wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.8s">Daftar Sekarang</a></li>
                             </ul>
                         </div> <!-- header hero content -->
                     </div>

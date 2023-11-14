@@ -15,6 +15,9 @@ Route::group(['middleware' => 'guest'], function() {
     Route::get('/login', [LoginController::class, 'login'])->name('login');
     Route::post('/loginu', [LoginController::class, 'dologin'])->name('masuk');
 
+    Route::get('/Daftar', [LoginController::class, 'register'])->name('register');
+    Route::post('/daftaru', [LoginController::class, 'dodaftar'])->name('daftar');
+
 });
 
 // untuk manager dan kasir

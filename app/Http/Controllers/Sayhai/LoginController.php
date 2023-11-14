@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -35,6 +36,33 @@ class LoginController extends Controller
         // jika email atau password salah
         // kirimkan session error
         return back()->with('error', 'username atau password salah');
+    }
+     public function register() {
+        return view('daftar');
+    }
+
+    public function dodaftar(Request $request) {
+        $request->validate([
+            'name' => 'required|unique:users',
+            'username' => 'required|unique:users',
+            'password' => 'required',
+            'password_confirmation' => 'required|same:password',
+        ]);
+
+        $user = User::create([
+            'foto' => 'default-user.png',
+            'name' => $request->name,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'role_id' => '1',
+        ]);
+        if($user){
+        return redirect()->route('login')->with('success', 'Berhasil Daftar. Mohon Login!');
+        }else{
+            return back()->with(
+            'password', 'Wrong username or password'
+        );
+        }
     }
 
     public function logout(Request $request) {
