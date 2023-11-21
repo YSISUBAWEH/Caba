@@ -91,7 +91,7 @@ input:focus {
                                     <div class="form-group w-75">
                                       <select name="selected_items[]" id="sI" multiple placeholder="Choose Menu" class="select2 ps-3 w-100" data-allow-clear="1" required>
                                         @foreach($item as $li)
-                                            <option value="{{$li->id}}"><span class="me-2">{{$li->name}}</span>/<span class="me-2">{{$li->harga}}</span>/<span>{{$li->stok}}</span></option>
+                                            <option value="{{$li->id}}"><span class="me-2">{{$li->name}}</span>--<span class="me-2">{{$li->harga}}</span>--<span>{{$li->stok}}</span></option>
                                         @endforeach
                                       </select>
                                     </div>
@@ -173,7 +173,7 @@ input:focus {
 			    			</div>
 			    			@if(session('Tcart'))
 						    @else
-							    <p class="text-center">href="No data available in table"</p>
+							    <p class="text-center">No data available in table</p>
 							@endif
                           </div>
 						</div>
@@ -224,8 +224,14 @@ input:focus {
   <script src="{{asset('arsip/admin/vendors/js/vendor.bundle.base.js')}}"></script>
   <script src="{{asset('arsip/admin/js/off-canvas.js')}}"></script>
   <script src="{{asset('arsip/admin/js/hoverable-collapse.js')}}"></script>
+  <script src="{{asset('arsip/admin/js/template.js')}}"></script>
   <script src="{{asset('arsip/admin/js/settings.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/todolist.js')}}"></script>
+@if(session('stokNull'))
+    <script>
+        // Display an alert using JavaScript
+        alert("{{ session('stokNull') }}");
+    </script>
+@endif
 <script>
 $('#userId').val("{{$auth->id}}");
 $('#Nota').val("{{$nota}}");

@@ -25,6 +25,7 @@ class UserFactory extends Factory
 
             // tambahkan baris diawah ini
             'role_id' => mt_rand(1, 2),
+            'toko_id' => '1',
 
             'remember_token' => Str::random(10),
         ];

@@ -115,8 +115,8 @@
   <!-- inject:js -->
   <script src="{{asset('arsip/admin/js/off-canvas.js')}}"></script>
   <script src="{{asset('arsip/admin/js/hoverable-collapse.js')}}"></script>
+  <script src="{{asset('arsip/admin/js/template.js')}}"></script>
   <script src="{{asset('arsip/admin/js/settings.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/todolist.js')}}"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script type="text/javascript">

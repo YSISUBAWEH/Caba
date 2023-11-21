@@ -74,10 +74,6 @@
           </div>
         </div>
         <!-- partial --> 
- <td>
-    <a href="#" id="{{ $rs->id }}" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#DetailModal">
-        <i class="ti-eye"></i>
-    </a>
 
     <div class="modal fade" id="DetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" aria-hidden="true">
         <div class="modal-dialog">

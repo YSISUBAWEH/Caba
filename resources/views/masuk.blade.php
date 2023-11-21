@@ -43,7 +43,7 @@
               <form method="post" action="{{route('masuk')}}" class="pt-3">
                 @csrf
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" name="username" placeholder="bulley92 / donna74">
+                  <input type="text" class="form-control form-control-lg" name="username" placeholder="Masukkan Username">
                 </div>
                 @error('username')
                         <div class="invalid-feedback">
@@ -89,9 +89,6 @@
   <!-- inject:js -->
   <script src="{{asset('arsip/admin/js/off-canvas.js')}}"></script>
   <script src="{{asset('arsip/admin/js/hoverable-collapse.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/template.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/settings.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/todolist.js')}}"></script>
   <!-- endinject -->
 </body>
 

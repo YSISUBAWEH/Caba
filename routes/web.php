@@ -26,79 +26,87 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2']], function() {
     Route::get('/redirect', [RedirectController::class, 'cek']);
 });
 
-
-// untuk manager
+// untuk owner
 Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
-    Route::get('/manager', [MawalController::class, 'index'])->name('M.index');
-    Route::get('/manager/transaksi', [MawalController::class ,'transaksi'])->name('M.R.T');
+    Route::get('/owner/dashboard', [MawalController::class, 'index'])->name('M.index');
 
-    //kategori
-    Route::get('/manager/data-kategori', [MitemController::class, 'kategori'])->name('M.kate');
-    Route::post('/manager/data-kategori/store', [MitemController::class, 'create_kategori'])->name('M.C.kate');
-    Route::get('/manager/data-kategori/loading', [MitemController::class, 'load_kategori'])->name('M.L.kate');
-    Route::delete('/manager/data-kategori/delete', [MitemController::class, 'delete_kategori'])->name('M.D.kate');
-    Route::get('/manager/data-kategori/edit', [MitemController::class, 'edit_kategori'])->name('M.E.kate');
-    Route::post('/manager/data-kategori/update', [MitemController::class, 'update_kategori'])->name('M.U.kate');
+    Route::get('/owner/create-toko', [MawalController::class, 'toko'])->name('M.C.T');
+    Route::post('/owner/create-toko/store', [MawalController::class, 'create_toko'])->name('M.C.T.P');
 
-    //unit
-    Route::get('/manager/data-unit', [MitemController::class, 'unit'])->name('M.unit');
-    Route::post('/manager/data-unit/store', [MitemController::class, 'create_unit'])->name('M.C.unit');
-    Route::get('/manager/data-unit/loading', [MitemController::class, 'load_unit'])->name('M.L.unit');
-    Route::delete('/manager/data-unit/delete', [MitemController::class, 'delete_unit'])->name('M.D.unit');
-    Route::get('/manager/data-unit/edit', [MitemController::class, 'edit_unit'])->name('M.E.unit');
-    Route::post('/manager/data-unit/update', [MitemController::class, 'update_unit'])->name('M.U.unit');
+    Route::get('/owner/transaksi', [MawalController::class ,'transaksi'])->name('M.R.T');
 
-    //item
-    Route::get('/manager/data-item', [MitemController::class, 'item'])->name('M.item');
-    Route::post('/manager/data-item/store', [MitemController::class, 'create_item'])->name('M.C.item');
-    Route::get('/manager/data-item/loading', [MitemController::class, 'load_item'])->name('M.L.item');
-    Route::delete('/manager/data-item/delete', [MitemController::class, 'delete_item'])->name('M.D.item');
-    Route::get('/manager/data-item/edit', [MitemController::class, 'edit_item'])->name('M.E.item');
-    Route::post('/manager/data-item/update', [MitemController::class, 'update_item'])->name('M.U.item');
-  //item
-    Route::get('/manager/data-user', [MuserController::class, 'user'])->name('M.user');
-    Route::post('/manager/data-user/store', [MuserController::class, 'create_user'])->name('M.C.user');
-    Route::get('/manager/data-user/loading', [MuserController::class, 'load_user'])->name('M.L.user');
-    Route::delete('/manager/data-user/delete', [MuserController::class, 'delete_user'])->name('M.D.user');
-    Route::get('/manager/data-user/edit', [MuserController::class, 'edit_user'])->name('M.E.user');
-    Route::post('/manager/data-user/update', [MuserController::class, 'update_user'])->name('M.U.user');
+    Route::get('/owner/data-item', [MitemController::class, 'item'])->name('M.item');
+    Route::get('/owner/data-item/loading', [MitemController::class, 'load_item'])->name('M.L.item');
+    Route::get('/owner/data-stok', [MitemController::class, 'stok'])->name('M.stok');
+    Route::get('/owner/data-stok-masuk/loading', [MitemController::class, 'load_stokM'])->name('M.L.stokM');
+    Route::get('/owner/data-stok-keluar/loading', [MitemController::class, 'load_stokK'])->name('M.L.stokK');
+    Route::get('/owner/data-suplayer', [MitemController::class, 'suplay'])->name('M.suplay');
+    Route::get('/owner/data-suplayer/loading', [MitemController::class, 'load_suplay'])->name('M.L.suplay');
 
-    //item
-    Route::get('/manager/data-suplayer', [MstokController::class, 'suplay'])->name('M.suplay');
-    Route::post('/manager/data-suplayer/store', [MstokController::class, 'create_suplay'])->name('M.C.suplay');
-    Route::get('/manager/data-suplayer/loading', [MstokController::class, 'load_suplay'])->name('M.L.suplay');
-    Route::delete('/manager/data-suplayer/delete', [MstokController::class, 'delete_suplay'])->name('M.D.suplay');
-    Route::get('/manager/data-suplayer/edit', [MstokController::class, 'edit_suplay'])->name('M.E.suplay');
-    Route::post('/manager/data-suplayer/update', [MstokController::class, 'update_suplay'])->name('M.U.suplay');
-
-    Route::get('/manager/data-stok', [MstokController::class, 'stok'])->name('M.stok');
-    Route::post('/manager/data-stok-masuk/store', [MstokController::class, 'create_stokM'])->name('M.C.stokM');
-    Route::get('/manager/data-stok-masuk/loading', [MstokController::class, 'load_stokM'])->name('M.L.stokM');
-    Route::delete('/manager/data-stok-masuk/delete', [MstokController::class, 'delete_stokM'])->name('M.D.stokM');
-    Route::get('/manager/data-stok-masuk/edit', [MstokController::class, 'edit_stokM'])->name('M.E.stokM');
-    Route::post('/manager/data-stok-masuk/update', [MstokController::class, 'update_stokM'])->name('M.U.stokM');
-
-    Route::post('/manager/data-stok-keluar/store', [MstokController::class, 'create_stokK'])->name('M.C.stokK');
-    Route::get('/manager/data-stok-keluar/loading', [MstokController::class, 'load_stokK'])->name('M.L.stokK');
-    Route::delete('/manager/data-stok-keluar/delete', [MstokController::class, 'delete_stokK'])->name('M.D.stokK');
-    Route::get('/manager/data-stok-keluar/edit', [MstokController::class, 'edit_stokK'])->name('M.E.stokK');
-    Route::post('/manager/data-stok-keluar/update', [MstokController::class, 'update_stokK'])->name('M.U.stokK');
+    Route::get('/owner/data-user', [MuserController::class, 'user'])->name('M.user');
+    Route::post('/owner/data-user/store', [MuserController::class, 'create_user'])->name('M.C.user');
+    Route::get('/owner/data-user/loading', [MuserController::class, 'load_user'])->name('M.L.user');
+    Route::delete('/owner/data-user/delete', [MuserController::class, 'delete_user'])->name('M.D.user');
+    Route::get('/owner/data-user/edit', [MuserController::class, 'edit_user'])->name('M.E.user');
+    Route::post('/owner/data-user/update', [MuserController::class, 'update_user'])->name('M.U.user');
   
     //laporan
-    Route::get('/manager/data-laporan/bulanan', [MawalController::class, 'bulan_laporan'])->name('M.B.L');
-    Route::get('/manager/data-laporan/harian', [MawalController::class, 'harian_laporan'])->name('M.H.L');
-    Route::post('/manager/data-laporan/bulanan/filter', [MawalController::class, 'filter_bulanan_laporan'])->name('M.F.LB');
-    Route::post('/manager/data-laporan/harian/filter', [MawalController::class, 'filter_harian_laporan'])->name('M.F.LH');
-    Route::get('/manager/data-laporan/tahunan', [MawalController::class, 'tahunan_laporan'])->name('M.T.L');
-    Route::post('/manager/data-laporan/tahunan/filter', [MawalController::class, 'filter_tahunan_laporan'])->name('M.F.LT');
+    Route::get('/owner/data-laporan/bulanan', [MawalController::class, 'bulan_laporan'])->name('M.B.L');
+    Route::get('/owner/data-laporan/harian', [MawalController::class, 'harian_laporan'])->name('M.H.L');
+    Route::post('/owner/data-laporan/bulanan/filter', [MawalController::class, 'filter_bulanan_laporan'])->name('M.F.LB');
+    Route::post('/owner/data-laporan/harian/filter', [MawalController::class, 'filter_harian_laporan'])->name('M.F.LH');
+    Route::get('/owner/data-laporan/tahunan', [MawalController::class, 'tahunan_laporan'])->name('M.T.L');
+    Route::post('/owner/data-laporan/tahunan/filter', [MawalController::class, 'filter_tahunan_laporan'])->name('M.F.LT');
 });
 
 // untuk kasir
 Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
-    Route::get('/kasir', [KawalController::class, 'index'])->name('K.index');
+    Route::get('/kasir/dashboard', [KawalController::class, 'index'])->name('K.index');
 
-  //item
+    //kategori
+    Route::get('/kasir/data-kategori', [KawalController::class, 'kategori'])->name('K.kate');
+    Route::post('/kasir/data-kategori/store', [KawalController::class, 'create_kategori'])->name('K.C.kate');
+    Route::get('/kasir/data-kategori/loading', [KawalController::class, 'load_kategori'])->name('K.L.kate');
+    Route::delete('/kasir/data-kategori/delete', [KawalController::class, 'delete_kategori'])->name('K.D.kate');
+    Route::get('/kasir/data-kategori/edit', [KawalController::class, 'edit_kategori'])->name('K.E.kate');
+    Route::post('/kasir/data-kategori/update', [KawalController::class, 'update_kategori'])->name('K.U.kate');
+
+    //unit
+    Route::get('/kasir/data-unit', [KawalController::class, 'unit'])->name('K.unit');
+    Route::post('/kasir/data-unit/store', [KawalController::class, 'create_unit'])->name('K.C.unit');
+    Route::get('/kasir/data-unit/loading', [KawalController::class, 'load_unit'])->name('K.L.unit');
+    Route::delete('/kasir/data-unit/delete', [KawalController::class, 'delete_unit'])->name('K.D.unit');
+    Route::get('/kasir/data-unit/edit', [KawalController::class, 'edit_unit'])->name('K.E.unit');
+    Route::post('/kasir/data-unit/update', [KawalController::class, 'update_unit'])->name('K.U.unit');
+
+    //item
     Route::get('/kasir/data-item', [KawalController::class, 'item'])->name('K.item');
+    Route::post('/kasir/data-item/store', [KawalController::class, 'create_item'])->name('K.C.item');
+    Route::get('/kasir/data-item/loading', [KawalController::class, 'load_item'])->name('K.L.item');
+    Route::delete('/kasir/data-item/delete', [KawalController::class, 'delete_item'])->name('K.D.item');
+    Route::get('/kasir/data-item/edit', [KawalController::class, 'edit_item'])->name('K.E.item');
+    Route::post('/kasir/data-item/update', [KawalController::class, 'update_item'])->name('K.U.item');
+
+    //stok
+    Route::get('/kasir/data-suplayer', [KawalController::class, 'suplay'])->name('K.suplay');
+    Route::post('/kasir/data-suplayer/store', [KawalController::class, 'create_suplay'])->name('K.C.suplay');
+    Route::get('/kasir/data-suplayer/loading', [KawalController::class, 'load_suplay'])->name('K.L.suplay');
+    Route::delete('/kasir/data-suplayer/delete', [KawalController::class, 'delete_suplay'])->name('K.D.suplay');
+    Route::get('/kasir/data-suplayer/edit', [KawalController::class, 'edit_suplay'])->name('K.E.suplay');
+    Route::post('/kasir/data-suplayer/update', [KawalController::class, 'update_suplay'])->name('K.U.suplay');
+
+    Route::get('/kasir/data-stok', [KawalController::class, 'stok'])->name('K.stok');
+    Route::post('/kasir/data-stok-masuk/store', [KawalController::class, 'create_stokM'])->name('K.C.stokM');
+    Route::get('/kasir/data-stok-masuk/loading', [KawalController::class, 'load_stokM'])->name('K.L.stokM');
+    Route::delete('/kasir/data-stok-masuk/delete', [KawalController::class, 'delete_stokM'])->name('K.D.stokM');
+    Route::get('/kasir/data-stok-masuk/edit', [KawalController::class, 'edit_stokM'])->name('K.E.stokM');
+    Route::post('/kasir/data-stok-masuk/update', [KawalController::class, 'update_stokM'])->name('K.U.stokM');
+
+    Route::post('/kasir/data-stok-keluar/store', [KawalController::class, 'create_stokK'])->name('K.C.stokK');
+    Route::get('/kasir/data-stok-keluar/loading', [KawalController::class, 'load_stokK'])->name('K.L.stokK');
+    Route::delete('/kasir/data-stok-keluar/delete', [KawalController::class, 'delete_stokK'])->name('K.D.stokK');
+    Route::get('/kasir/data-stok-keluar/edit', [KawalController::class, 'edit_stokK'])->name('K.E.stokK');
+    Route::post('/kasir/data-stok-keluar/update', [KawalController::class, 'update_stokK'])->name('K.U.stokK');
 
   //transaksi
     Route::get('/kasir/transaksi', [KtranController::class ,'transaksi'])->name('K.V.T');

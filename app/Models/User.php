@@ -23,7 +23,12 @@ class User extends Authenticatable
         'password',
         'foto',
         'role_id',
+        'toko_id',
     ];
+    public function toko()
+    {
+        return $this->belongsTo(Toko::class, 'toko_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

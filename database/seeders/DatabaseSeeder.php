@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Toko;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,9 +17,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
+        Toko::create([
+            'id'=>'1',
+        'nama'=>'kosong',
+        'alamat'=>'a',
+        'jenis_toko'=>'awal',
+        'nomor_telepon'=>'0',
+        ]);
         Role::create([
-            'role_name' => 'manager',
+            'role_name' => 'owner',
         ]);
 
         Role::create([

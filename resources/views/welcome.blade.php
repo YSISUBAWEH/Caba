@@ -168,7 +168,7 @@
                         </div>
                         <div class="services-content">
                             <h4 class="services-title"><a href="#">Easy to Use</a></h4>
-                            <p class="text"> Antarmuka pengguna yang intuitif membuat pengguna dapat dengan cepat mengeksploitasi fitur-fitur aplikasi.</p>
+                            <p class="text"> Antarmuka pengguna yang mudah membuat pengguna dapat dengan cepat mengeksploitasi fitur-fitur aplikasi.</p>
                         </div>
                     </div> <!-- single services -->
                 </div>
@@ -294,7 +294,7 @@
                     <div class="col-lg-12">
                         <div class="copyright d-sm-flex justify-content-between">
                             <div class="copyright-text text-center">
-                                <p class="text">© 2023 HEWABUS. All rights reserved.
+                                <p class="text">© 2023 HEWABUS & team. All rights reserved.
 </p>
                             </div> <!-- copyright text -->
                             

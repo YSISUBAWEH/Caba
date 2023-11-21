@@ -1,4 +1,4 @@
-@extends('manager.layout.layout')
+@extends('kasir.layout.layout')
     @push('css')
         <!-- plugins:css -->
   <link rel="stylesheet" href="{{asset('arsip/admin/vendors/feather/feather.css')}}">
@@ -28,13 +28,13 @@
                       
                     </p>
                   </div>
-                  <div>
-                    <button href="javascript:void(0)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSmModal">
-                      <i class="ti-plus p-2"></i>Tambah</button>
+                  <div class="mb-2">
+                    <button href="javascript:void(0)" class="add btn btn-icons btn-rounded btn-primary todo-list-add-btn text-white me-0 pl-12p" data-bs-toggle="modal" data-bs-target="#addSmModal">
+                      <i class="mdi mdi-plus p-0"></i></button>
                   </div>
                 </div>
                 <div class="table-responsive" id="loadSM">
-                  <h5 class="text-center text-secondary my-5">Loading...</h5>
+                  <p class="text-center text-secondary my-5">Loading...</p>
                 </div>
               </div>
             </div>
@@ -50,9 +50,9 @@
                       
                     </p>
                   </div>
-                  <div>
-                    <button href="javascript:void(0)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSkModal">
-                      <i class="ti-plus p-2"></i>Tambah</button>
+                  <div class="mb-2">
+                    <button href="javascript:void(0)" class="add btn btn-icons btn-rounded btn-primary todo-list-add-btn text-white me-0 pl-12p" data-bs-toggle="modal" data-bs-target="#addSkModal">
+                      <i class="mdi mdi-plus"></i></button>
                   </div>
                 </div>
                 <div class="table-responsive" id="loadSK">
@@ -88,7 +88,7 @@
                   <option selected="Select">----Pilih Items----</option>
                   @foreach ($item as $i)
                     <option value="{{ $i->id }}" class="p-2" style="padding: 0; display: flex; justify-content: space-between; align-items: center;">
-    <span style="margin: 0;">{{ $i->name }}</span>
+    <span style="margin: 0;">{{ $i->name }}</span>---
     <span style="margin: 0;">{{ $i->stok }}</span>
 </option>
 
@@ -131,7 +131,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Stok</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Stok Keluar</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="#" method="POST" id="add_sk_form" enctype="multipart/form-data">
@@ -177,8 +177,8 @@
   <!-- inject:js -->
   <script src="{{asset('arsip/admin/js/off-canvas.js')}}"></script>
   <script src="{{asset('arsip/admin/js/hoverable-collapse.js')}}"></script>
+  <script src="{{asset('arsip/admin/js/template.js')}}"></script>
   <script src="{{asset('arsip/admin/js/settings.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/todolist.js')}}"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script type="text/javascript">
@@ -191,7 +191,7 @@
         const fd = new FormData(this);
         $("#add_sm_btn").text('Memproses ...');
         $.ajax({
-          url: '{{ route('M.C.stokM') }}',
+          url: '{{ route('K.C.stokM') }}',
           method: 'post',
           data: fd,
           cache: false,
@@ -235,7 +235,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: '{{ route('M.D.stokM') }}',
+              url: '{{ route('K.D.stokM') }}',
               method: 'delete',
               data: {
                 id: id,
@@ -260,11 +260,11 @@
  
       function loadSMasuk() {
         $.ajax({
-          url: '{{ route('M.L.stokM') }}',
+          url: '{{ route('K.L.stokM') }}',
           method: 'get',
           success: function(response) {
             $("#loadSM").html(response);
-            $("#tasu").DataTable({
+            $("#tasm").DataTable({
               order: [0, 'asc']
             });
           },
@@ -280,7 +280,7 @@
         const fd = new FormData(this);
         $("#add_sk_btn").text('Memproses ...');
         $.ajax({
-          url: '{{ route('M.C.stokK') }}',
+          url: '{{ route('K.C.stokK') }}',
           method: 'post',
           data: fd,
           cache: false,
@@ -324,7 +324,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: '{{ route('M.D.stokK') }}',
+              url: '{{ route('K.D.stokK') }}',
               method: 'delete',
               data: {
                 id: id,
@@ -349,7 +349,7 @@
  
       function loadKeluar() {
         $.ajax({
-          url: '{{ route('M.L.stokK') }}',
+          url: '{{ route('K.L.stokK') }}',
           method: 'get',
           success: function(response) {
             $("#loadSK").html(response);

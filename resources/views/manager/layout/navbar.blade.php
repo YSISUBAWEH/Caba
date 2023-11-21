@@ -14,7 +14,7 @@
       <div class="navbar-menu-wrapper d-flex align-items-top"> 
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Selamat Datang, <span class="text-black fw-bold">{{$auth->name}}</span></h1>
+            <h1 class="welcome-text">Selamat Datang di <span class="text-black fw-bold">{{$auth->toko->nama}}</span></h1>
             <h3 class="welcome-sub-text">Jalani Harimu Dengan Semangat! </h3>
           </li>
         </ul>

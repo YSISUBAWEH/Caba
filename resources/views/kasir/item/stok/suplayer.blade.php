@@ -1,4 +1,4 @@
-@extends('manager.layout.layout')
+@extends('kasir.layout.layout')
     @push('css')
         <!-- plugins:css -->
   <link rel="stylesheet" href="{{asset('arsip/admin/vendors/feather/feather.css')}}">
@@ -23,18 +23,18 @@
               <div class="card-body">
                 <div class="d-sm-flex justify-content-between align-items-start">
                   <div>
-                    <h4 class="card-title">Data Items</h4>
+                    <h4 class="card-title">Data Suplayers</h4>
                     <p class="card-description">
-                      Tabel Items
+                      Tabel Suplayer
                     </p>
                   </div>
                   <div>
-                    <button href="javascript:void(0)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addItemModal">
-                      <i class="ti-plus p-2"></i>Tambah</button>
+                    <button href="javascript:void(0)" class="btn btn-primary text-white btn-rounded mb-0 me-0" data-bs-toggle="modal" data-bs-target="#addSuplaModal">
+                      <i class="ti-plus p-2"></i></button>
                   </div>
                 </div>
-                <div class="table-responsive" id="loadI">
-                  <h5 class="text-center text-secondary my-5">Loading...</h5>
+                <div class="table-responsive" id="loadS">
+                  <p class="text-center text-secondary my-5">Loading...</p>
                 </div>
               </div>
             </div>
@@ -46,7 +46,7 @@
         <!-- partial -->
         {{-- new menu modal kate--}}
 
-<div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="addSuplaModal" tabindex="-1" aria-labelledby="exampleModalLabel"
   data-bs-backdrop="static" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -54,7 +54,7 @@
         <h5 class="modal-title" id="exampleModalLabel">Tambah Item</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="#" method="POST" id="add_item_form" enctype="multipart/form-data">
+      <form action="#" method="POST" id="add_supla_form" enctype="multipart/form-data">
         @csrf
         <div class="modal-body p-4">
           <div class="row">
@@ -62,38 +62,23 @@
               <label class="fw-semibold mb-1" for="name">name</label>
               <input type="text" name="name" class="form-control" placeholder="Name" required>
             </div>
+              <div class="my-2">
+                <label for="name">Telepon</label>
+                <input type="text" name="telepon" class="form-control" placeholder="Telepon">
+              </div>
             <div class="my-2">
-              <label class="fw-semibold mb-1" for="harga">harga</label>
-              <input type="text" name="harga" class="form-control" placeholder="Name" required>
+              <label class="fw-semibold mb-1" for="harga">alamat</label>
+              <input type="text" name="alamat" class="form-control" placeholder="Alamat" required>
             </div>
             <div class="my-2">
-              <label for="kategori_menu">Kategori</label>
-                <select class="form-control" name="kategori" required>
-                  <option selected="Select">----Pilih Kategori----</option>
-                  @foreach ($kategori as $k)
-                    <option value="{{ $k->kode_kate }}">{{ $k->name }}</option>
-                  @endforeach
-                </select>
-            </div>
-            <div class="my-2">
-              <label for="unit">Unit/Size</label>
-                <select class="form-control" name="unit" required>
-                  <option selected="Select">----Pilih Unit----</option>
-                  @foreach ($unit as $k)
-                    <option value="{{ $k->kode_uk }}">{{ $k->name }}</option>
-                  @endforeach
-                </select>
-            </div>
-
-            <div class="my-2">
-              <label for="foto">Select Image</label>
-              <input type="file" name="img" class="form-control" required>
+              <label class="fw-semibold mb-1" for="harga">Deskripsi</label>
+              <input type="text-area" name="deskripsi" class="form-control" placeholder="Deskripsi" required>
             </div>
             </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" id="add_item_btn" class="btn btn-primary">Selesai</button>
+          <button type="submit" id="add_supla_btn" class="btn btn-primary">Selesai</button>
         </div>
       </form>
     </div>
@@ -101,7 +86,7 @@
 </div>
  
 {{-- edit menu modal kate --}}
-<div class="modal fade" id="editItModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="editSuModal" tabindex="-1" aria-labelledby="exampleModalLabel"
   data-bs-backdrop="static" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -109,10 +94,9 @@
         <h5 class="modal-title" id="exampleModalLabel">Edit Item</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="#" method="POST" id="edit_item_form" enctype="multipart/form-data">
+      <form action="#" method="POST" id="edit_supla_form" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="me_id" id="me_id">
-        <input type="hidden" name="me_img" id="me_img">
           <div class="modal-body p-4 bg-light">
             <div class="row">
               <div class="my-2">
@@ -120,37 +104,22 @@
                 <input type="text" name="name" id="name" class="form-control" placeholder="Name" required>
               </div>
               <div class="my-2">
-                <label for="name">name</label>
-                <input type="text" name="harga" id="harga" class="form-control" placeholder="Harga" required>
+                <label for="name">Telepon</label>
+                <input type="text" name="telepon" id="telepon" class="form-control" placeholder="Telepon">
               </div>
               <div class="my-2">
-              <label for="kategori_menu">Kategori</label>
-              <select class="form-control" name="kategori" id="kategori" required>
-                  <option selected="Select">----Pilih Kategori----</option>
-               @foreach ($kategori as $k)
-                  <option value="{{ $k->kode_kate}}" {{ $k->kode_kate == 1 ? 'selected' : '' }}>{{ $k->name }}</option>
-               @endforeach
-            </select>
-            </div>
-            <div class="my-2">
-              <label for="kategori_menu">Unit</label>
-              <select class="form-control" name="unit" id="unit" required>
-                  <option selected="Select">----Pilih Unit----</option>
-               @foreach ($unit as $k)
-                  <option value="{{ $k->kode_uk }}" {{ $k->kode_uk == 1 ? 'selected' : '' }}>{{ $k->name }}</option>
-               @endforeach
-              </select>
-            </div>
-            <div class="my-2">
-              <label for="foto">Select Foto</label>
-              <input type="file" name="img" class="form-control" required>
-            </div>
-              <div class="mt-2" id="img"></div>
+                <label for="name">Alamat</label>
+                <input type="text" name="alamat" id="alamat" class="form-control" placeholder="Alamat">
+              </div>
+              <div class="my-2">
+                <label for="name">Deskripsi</label>
+                <input type="text-area" name="deskripsi" id="deskripsi" class="form-control" placeholder="Deskripsi">
+              </div>
             </div>
           </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" id="edit_item_btn" class="btn btn-success">Update Kategori</button>
+          <button type="submit" id="edit_supla_btn" class="btn btn-success">Update Kategori</button>
         </div>
       </form>
     </div>
@@ -178,12 +147,12 @@
     $(function() {
  
       // add new employee ajax request
-      $("#add_item_form").submit(function(e) {
+      $("#add_supla_form").submit(function(e) {
         e.preventDefault();
         const fd = new FormData(this);
-        $("#add_item_btn").text('Memproses ...');
+        $("#add_supla_btn").text('Memproses ...');
         $.ajax({
-          url: '{{ route('M.C.item') }}',
+          url: '{{ route('K.C.suplay') }}',
           method: 'post',
           data: fd,
           cache: false,
@@ -197,11 +166,11 @@
                 'Item berhasil ditambah !',
                 'success'
               )
-              loadItem();
+              loadSuplay();
             }
-            $("#add_item_btn").text('Add Kategori');
-            $("#add_item_form")[0].reset();
-            $("#addItemModal").modal('hide');
+            $("#add_supla_btn").text('Add Kategori');
+            $("#add_supla_form")[0].reset();
+            $("#addSuplaModal").modal('hide');
           },error: function(data){
        var errors = data.responseJSON;
        console.log(errors);
@@ -214,7 +183,7 @@
         e.preventDefault();
         let id = $(this).attr('id');
         $.ajax({
-          url: '{{ route('M.E.item') }}',
+          url: '{{ route('K.E.suplay') }}',
           method: 'get',
           data: {
             id: id,
@@ -222,24 +191,21 @@
           },
           success: function(response) {
              $("#name").val(response.name);
-            $("#harga").val(response.harga);
-            $("#kategori").val(response.kode_kate);
-            $("#unit").val(response.kode_uk);
-            $("#img").html(
-              `<img src="/arsip/data/img/${response.img}" width="180" class="img-fluid img-thumbnail">`);
+            $("#telepon").val(response.telepon);
+            $("#alamat").val(response.alamat);
+            $("#deskripsi").val(response.deskripsi);
             $("#me_id").val(response.id);
-            $("#me_img").val(response.img);
           }
         });
       });
  
       // update employee ajax request
-      $("#edit_item_form").submit(function(e) {
+      $("#edit_supla_form").submit(function(e) {
         e.preventDefault();
         const fd = new FormData(this);
-        $("#edit_item_btn").text('Proses ...');
+        $("#edit_supla_btn").text('Proses ...');
         $.ajax({
-          url: '{{ route('M.U.item') }}',
+          url: '{{ route('K.U.suplay') }}',
           method: 'post',
           data: fd,
           cache: false,
@@ -253,11 +219,11 @@
                 'Item Berhasil diubah!',
                 'success'
               )
-              loadItem();
+              loadSuplay();
             }
-            $("#edit_item_btn").text('Update Menu');
-            $("#edit_item_form")[0].reset();
-            $("#editItModal").modal('hide');
+            $("#edit_supla_btn").text('Update Menu');
+            $("#edit_supla_form")[0].reset();
+            $("#editSuModal").modal('hide');
           }
         });
       });
@@ -278,7 +244,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: '{{ route('M.D.item') }}',
+              url: '{{ route('K.D.suplay') }}',
               method: 'delete',
               data: {
                 id: id,
@@ -290,7 +256,7 @@
                   'Your file has been deleted.',
                   'success'
                 )
-                loadItem();
+                loadSuplay();
               }
             });
           }
@@ -298,15 +264,15 @@
       }); 
  
       // fetch all kate ajax request
-      loadItem();
+      loadSuplay();
  
-      function loadItem() {
+      function loadSuplay() {
         $.ajax({
-          url: '{{ route('M.L.item') }}',
+          url: '{{ route('K.L.suplay') }}',
           method: 'get',
           success: function(response) {
-            $("#loadI").html(response);
-            $("#tait").DataTable({
+            $("#loadS").html(response);
+            $("#tasu").DataTable({
               order: [0, 'asc']
             });
           },

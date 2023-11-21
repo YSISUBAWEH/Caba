@@ -1,4 +1,4 @@
-@extends('manager.layout.layout')
+@extends('kasir.layout.layout')
     @push('css')
         <!-- plugins:css -->
   <link rel="stylesheet" href="{{asset('arsip/admin/vendors/feather/feather.css')}}">
@@ -41,8 +41,8 @@
                             </p>
                         </div>
                         <div>
-                            <button href="javascript:void(0)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addKateModal">
-                                <i class="ti-plus"></i>Tambah</button>
+                            <button href="javascript:void(0)" class="btn btn-primary text-white btn-rounded mb-0 me-0" data-bs-toggle="modal" data-bs-target="#addKateModal">
+                                <i class="mdi mdi-plus"></i></button>
                         </div>
                     </div>
                   <div class="table-responsive" id="loadK">
@@ -62,8 +62,8 @@
                             </p>
                         </div>
                         <div>
-                            <button href="javascript:void(0)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUnitModal">
-                                <i class="ti-plus"></i>Tambah</button>
+                            <button href="javascript:void(0)" class="btn btn-primary text-white btn-rounded mb-0 me-0" data-bs-toggle="modal" data-bs-target="#addUnitModal">
+                                <i class="mdi mdi-plus"></i></button>
                         </div>
                     </div>
                   <div class="table-responsive" id="loadU">
@@ -212,8 +212,8 @@
   <!-- inject:js -->
   <script src="{{asset('arsip/admin/js/off-canvas.js')}}"></script>
   <script src="{{asset('arsip/admin/js/hoverable-collapse.js')}}"></script>
+  <script src="{{asset('arsip/admin/js/template.js')}}"></script>
   <script src="{{asset('arsip/admin/js/settings.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/todolist.js')}}"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script>
@@ -226,7 +226,7 @@
         const fd = new FormData(this);
         $("#add_kate_btn").text('Memproses ...');
         $.ajax({
-          url: '{{ route('M.C.kate') }}',
+          url: '{{ route('K.C.kate') }}',
           method: 'post',
           data: fd,
           cache: false,
@@ -254,7 +254,7 @@
         e.preventDefault();
         let id = $(this).attr('id');
         $.ajax({
-          url: '{{ route('M.E.kate') }}',
+          url: '{{ route('K.E.kate') }}',
           method: 'get',
           data: {
             id: id,
@@ -273,7 +273,7 @@
         const fd = new FormData(this);
         $("#edit_kate_btn").text('Proses ...');
         $.ajax({
-          url: '{{ route('M.U.kate') }}',
+          url: '{{ route('K.U.kate') }}',
           method: 'post',
           data: fd,
           cache: false,
@@ -312,7 +312,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: '{{ route('M.D.kate') }}',
+              url: '{{ route('K.D.kate') }}',
               method: 'delete',
               data: {
                 id: id,
@@ -336,7 +336,7 @@
  
       function loadKa() {
         $.ajax({
-          url: '{{ route('M.L.kate') }}',
+          url: '{{ route('K.L.kate') }}',
           method: 'get',
           success: function(response) {
             $("#loadK").html(response);
@@ -354,7 +354,7 @@
         const fd = new FormData(this);
         $("#add_unit_btn").text('Memproses ...');
         $.ajax({
-          url: '{{ route('M.C.unit') }}',
+          url: '{{ route('K.C.unit') }}',
           method: 'post',
           data: fd,
           cache: false,
@@ -383,7 +383,7 @@
         let id = $(this).attr('id');
         console.log(id)
         $.ajax({
-          url: '{{ route('M.E.unit') }}',
+          url: '{{ route('K.E.unit') }}',
           method: 'get',
           data: {
             id: id,
@@ -402,7 +402,7 @@
         const fd = new FormData(this);
         $("#edit_unit_btn").text('Proses ...');
         $.ajax({
-          url: '{{ route('M.U.unit') }}',
+          url: '{{ route('K.U.unit') }}',
           method: 'post',
           data: fd,
           cache: false,
@@ -441,7 +441,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: '{{ route('M.D.unit') }}',
+              url: '{{ route('K.D.unit') }}',
               method: 'delete',
               data: {
                 id: id,
@@ -464,7 +464,7 @@
  
       function loadUn() {
         $.ajax({
-          url: '{{ route('M.L.unit') }}',
+          url: '{{ route('K.L.unit') }}',
           method: 'get',
           success: function(response) {
             $("#loadU").html(response);

@@ -4,22 +4,49 @@ namespace App\Http\Controllers\Saymanager;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Transaksi;
+use Illuminate\Support\Carbon;
+use App\Models\User;
+use App\Models\Kategori;
+use App\Models\Unit;
 use App\Models\Item;
+use App\Models\Transaksi;
+use App\Models\Suplayer;
+use App\Models\SMasuk;
+use App\Models\SKeluar;
+use App\Models\Toko;
 
 class MawalController extends Controller
 {
     public function index() {
         $auth = auth()->user();
-	    $item = Item::all();
-	    dd($item);
-        $transaksi = Transaksi::with('menus')->get();
-        return view('manager.index',compact('auth','transaksi'));
+        $user = User::all();
+        $item = Item::all();
+        $transaksi = Transaksi::with('menus','user')->get();
+        $pendapatanB = Transaksi::whereBetween('created_at', [
+            Carbon::now()->startOfMonth(),
+            Carbon::now()->endOfMonth()
+        ])
+        ->selectRaw('SUM(total_pembayaran) as total_pembayaran')
+        ->get();
+        $pendapatanH = Transaksi::whereBetween('created_at', [
+            Carbon::now()->startOfWeek(),
+            Carbon::now()->endOfWeek()
+        ])
+        ->selectRaw('SUM(total_pembayaran) as total_pembayaran')
+        ->get();
+        $pendapatanY = Transaksi::whereBetween('created_at', [
+            Carbon::now()->startOfYear(),
+            Carbon::now()->endOfYear()
+        ])
+        ->selectRaw('SUM(total_pembayaran) as total_pembayaran')
+        ->get();
+
+        return view('manager.index',compact('auth','item','user','transaksi','pendapatanH','pendapatanB','pendapatanY'));
     }
     public function transaksi(){
 	    $auth=auth()->user();
 	    $data= Transaksi::with('menus')->orderBy('tanggal_pembayaran', 'desc')->get();
-	    return view('manager.transaksi.riwayat',compact('auth','data'));
+	    return view('manager.riwayatT',compact('auth','data'));
 	}
 		public function bulan_laporan() {
     $auth = auth()->user();
@@ -207,6 +234,31 @@ class MawalController extends Controller
 
 	    
 	    return view('manager.laporan.tahunan', compact('tahunan', 'selectT', 'auth', 'tahunl'));
+	}
+
+	public function toko()
+	{
+		return view('manager.toko');
+	}
+
+	public function create_toko(Request $request)
+	{
+        $toko = Toko::create([
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'jenis_toko' => $request->toko,
+            'no_telepon' => $request->telepon,
+        ]);
+        if($toko){
+	        $user = User::find(auth()->user()->id);
+	        $user->toko_id = $toko->id;
+	        $user->save();	        
+	        	return redirect()->route('M.index')->with('success', 'Berhasil');
+	    }else{
+	        return back()->with(
+	       		'password', 'Wrong username or password'
+	        );
+    	}
 	}
 
 }

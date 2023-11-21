@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Transaksi;
+use App\Models\SKeluar;
 
 class KtranController extends Controller
 {
@@ -146,6 +147,14 @@ public function addCart_transaksi(Request $request)
             $item = Item::find($id);
             $item->stok -= $details['quantity'];
             $item->save();
+
+            $stokK = SKeluar::create([
+                'id' => "SKBC-" . date("YmdHis"),
+                'item_id' => $id,
+                'users_id' => auth()->user()->id,
+                'stok' => $details['quantity'],
+                'deskripsi' => 'Barang Dijual',
+            ]);
         }
         // Hapus cart setelah checkout
         session()->forget('Tcart');

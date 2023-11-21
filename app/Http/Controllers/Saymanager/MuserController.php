@@ -15,14 +15,21 @@ class MuserController extends Controller
     } 
  
     public function load_user() {
-        $get_menu = User::all();
+        $tokoId = auth()->user()->toko_id;
+
+    $users = User::where('toko_id', $tokoId)->get();
+        $tokoId = auth()->user()->toko_id;
+
+        $get_menu = User::where('toko_id', $tokoId)
+                ->where('role_id', 2)
+                ->get();
         $output = '';
         if ($get_menu->count() > 0) {
             $output .= '<table id="taus" class="table table-stripped">
             <thead>
               <tr>
                 <th>No</th>
-                <th>foto/th>
+                <th>foto</th>
                 <th>Nama</th>
                 <th>Username</th>
                 <th>Action</th>
@@ -32,7 +39,7 @@ class MuserController extends Controller
             foreach ($get_menu as $no=>$rs) {
                 $output .= '<tr>
                 <td>' . $no+1 . '</td>
-                <td>'. $rs->foto .'</td>
+                <td><img src="'. $rs->foto .'" class="img-thumbnail"></td>
                 <td>' . $rs->name . '</td>s
                 <td>' . $rs->username . '</td>
                 <td>
@@ -58,7 +65,7 @@ class MuserController extends Controller
         $request->foto->move($path, $imageName);
 
         $kameData = [
-			'name' => $request->name, 'username' => $request->username,'password' => $request->password, 'foto' => $imageName
+			'name' => $request->name, 'username' => $request->username,'password' => $request->password, 'foto' => $imageName,'role_id' => $request->role,'toko_id' => auth()->user()->toko_id,
         ];
         User::create($kameData);
       return response()->json([

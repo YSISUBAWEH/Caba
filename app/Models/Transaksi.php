@@ -33,4 +33,8 @@ protected $keyType = 'string';
         return $this->belongsToMany(Item::class)
             ->withPivot('quantity', 'harga');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id');
+    }
 }

@@ -40,6 +40,9 @@
     <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
+  <script type="text/javascript">
+    var idRole = 2;
+  </script>
 @stack('script')
 </body>
 

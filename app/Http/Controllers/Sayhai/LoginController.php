@@ -25,11 +25,17 @@ class LoginController extends Controller
             // buat ulang session login
             $request->session()->regenerate();
             if (auth()->user()->role_id === 1) {
-                // jika user superadmin
-                return redirect()->intended('/manager');
+
+                $toid = auth()->user()->toko_id;
+                if($toid == 1){
+                    return redirect()->intended('/owner/create-toko');
+                }else{
+                    // jika user superadmin
+                    return redirect()->intended('/owner/dashboard');
+                }
             } else {
                 // jika user pegawai
-                return redirect()->intended('/kasir');
+                return redirect()->intended('/kasir/dashboard');
             }
         }
 
@@ -50,11 +56,12 @@ class LoginController extends Controller
         ]);
 
         $user = User::create([
-            'foto' => 'default-user.png',
+            'foto' => 'face-1.jpg',
             'name' => $request->name,
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'role_id' => '1',
+            'toko_id' => '1'
         ]);
         if($user){
         return redirect()->route('login')->with('success', 'Berhasil Daftar. Mohon Login!');

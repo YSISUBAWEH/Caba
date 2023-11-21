@@ -1,4 +1,4 @@
-@extends('kasir.layout.layout')
+@extends('manager.layout.layout')
     @push('css')
         <!-- plugins:css -->
   <link rel="stylesheet" href="{{asset('arsip/admin/vendors/feather/feather.css')}}">
@@ -33,37 +33,29 @@
         <div class="col-lg-12 grid-margin stretch-card">
           <div class="card">
               <div class="card-body">
-                <h4 class="card-title">Riwayat Transaksi</h4>
+                <h4 class="card-title">Tabel Item</h4>
                 <p class="card-description">
                     sgahdgs
                 </p>
                 <div class="table-responsive" id="loadI">
                 	<table id="tait" class="table table-stripped">
 			            <thead>
-			              <tr>
-			                <th>No</th>
-			                <th>Nota</th>
-			                <th>Item</th>
-			                <th>Total</th>
-			                <th>Tanggal</th>
-			                <th>-</th>
-			              </tr>
+			               <tr>
+                      <th>Kode</th>
+                      <th>Nama</th>
+                      <th>Stok</th>
+                      <th>Harga</th>
+                      <th></th>
+                    </tr>
 			            </thead>
 			            <tbody>
-            				@foreach ($data as $rs)
+            				@foreach ($item as $li)
             					<tr>
-					                <td>{{ $loop->iteration }}</td>
-					                <td>{{$rs->id}}</td>
-                          <td>
-                           @foreach ($rs->menus as $menu)
-                          <li>{{$menu->name }}
-                          ({{ number_format($menu->pivot->harga, 0, ',', '.') }}x
-                          {{ $menu->pivot->quantity }})</li>
-                            @endforeach</td>
-					                <td class="text-end">{{ number_format($rs->total_pembayaran, 0, ',', '.')}}</td>
-					                <td>{{ $rs->tanggal_pembayaran}}</td>
-					                <td><a href="#" id="{{$rs->id }}" class="btn btn-outline-secondary align-items-center mx-1" data-bs-toggle="modal" data-bs-target="#DetailModal"><i class="ti-eye"></i></a>
-                            <button type="submit"  value="print" class="btn btn-outline-secondary align-items-center" id="print-button"><i class="icon-printer"></i></button></td>
+					                <td>{{$li->id}}</td>
+                          <td>{{$li->name}}</td>
+					                <td>{{ $li->stok}}</td>
+					                <td class="text-end">{{ number_format($li->harga, 0, ',', '.')}}</td>
+					                <td class="text-center"><a href="#" id="{{$li->id }}" class="btn btn-lg btn-outline-secondary mx-1" data-bs-toggle="modal" data-bs-target="#DetailModal"><i class="ti-eye"></i></a>
               					</tr>
               				@endforeach
               			</tbody>
@@ -75,7 +67,7 @@
         </div>
         <!-- partial --> 
  <td>
-    <a href="#" id="{{ $rs->id }}" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#DetailModal">
+    <a href="#" id="{{ $li->id }}" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#DetailModal">
         <i class="ti-eye"></i>
     </a>
 
@@ -89,40 +81,29 @@
                 <div class="modal-body p-4 bg-light">
                     <div class="row">
                         <div class="my-2 d-flex justify-content-between">
-                            <p>Id Transaksi</p>
-                            <p>{{ $rs->id }}</p>
+                            <p>Kode Item</p>
+                            <p>{{ $li->id }}</p>
                         </div>
-                       <div class="my-2">
-                          <p>Item</p>
-                          <ul>
-                              @foreach ($rs->menus as $menu)
-                                  <li>
-                                      {{ $menu->name }}
-                                      ({{ number_format($menu->pivot->harga, 0, ',', '.') }}x{{ $menu->pivot->quantity }})
-                                  </li>
-                              @endforeach
-                          </ul>
-                      </div>
 
                         <div class="my-2 d-flex justify-content-between">
-                            <p>Tanggal Transaksi</p>
-                            <p>{{ $rs->tanggal_pembayaran }}</p>
+                            <p>Name</p>
+                            <p>{{ $li->name }}</p>
                         </div>
                         <div class="my-2 d-flex justify-content-between">
-                            <p>Total</p>
-                            <p>{{ $rs->total_pembayaran }}</p>
+                            <p>stok</p>
+                            <p>{{ $li->stok }}</p>
                         </div>
                         <div class="my-2 d-flex justify-content-between">
-                            <p>Metode Pembayaran</p>
-                            <p>{{ $rs->metode_pembayaran }}</p>
+                            <p>Harga</p>
+                            <p>{{ number_format($li->harga, 0, ',', '.') }}</p>
                         </div>
                         <div class="my-2 d-flex justify-content-between">
-                            <p>Dibayar</p>
-                            <p>{{ $rs->uang_pembayaran }}</p>
+                            <p>stok</p>
+                            <p>{{ $li->kate->name }}</p>
                         </div>
                         <div class="my-2 d-flex justify-content-between">
-                            <p>Kembalian</p>
-                            <p>{{ $rs->kembalian }}</p>
+                            <p>stok</p>
+                            <p>{{ $li->uk->name }}</p>
                         </div>
                     </div>
                 </div>

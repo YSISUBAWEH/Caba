@@ -16,6 +16,20 @@
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{route('K.item')}}">Item</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('K.kate')}}">Kategori & Unit</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#suplay" aria-expanded="false" aria-controls="suplay">
+            <i class="menu-icon mdi mdi-alpha-s-box-outline"></i>
+              <span class="menu-title">Inventory Stok</span>
+              <i class="menu-arrow"></i> 
+            </a>
+            <div class="collapse" id="suplay">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{route('K.suplay')}}">Suplayer</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('K.stok')}}">stok</a></li>
               </ul>
             </div>
           </li>

@@ -17,6 +17,7 @@ class Item extends Model
         'kode_kate',
         'kode_uk',
         'img','stok',
+        'SKU',
     ];
 protected $primaryKey = 'id';
 public $incrementing = false;
