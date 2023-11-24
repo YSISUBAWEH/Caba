@@ -30,7 +30,7 @@
                   </div>
                   <div class="mb-2">
                     <button href="javascript:void(0)" class="add btn btn-icons btn-rounded btn-primary todo-list-add-btn text-white me-0 pl-12p" data-bs-toggle="modal" data-bs-target="#addSmModal">
-                      <i class="mdi mdi-plus p-0"></i></button>
+                      <i class="mdi mdi-sign-caution p-0"></i></button>
                   </div>
                 </div>
                 <div class="table-responsive" id="loadSM">

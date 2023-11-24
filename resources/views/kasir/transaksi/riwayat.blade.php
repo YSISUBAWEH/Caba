@@ -39,35 +39,42 @@
                 </p>
                 <div class="table-responsive" id="loadI">
                 	<table id="tait" class="table table-stripped">
-			            <thead>
-			              <tr>
-			                <th>No</th>
-			                <th>Nota</th>
-			                <th>Item</th>
-			                <th>Total</th>
-			                <th>Tanggal</th>
-			                <th>-</th>
-			              </tr>
-			            </thead>
-			            <tbody>
-            				@foreach ($data as $rs)
-            					<tr>
-					                <td>{{ $loop->iteration }}</td>
-					                <td>{{$rs->id}}</td>
-                          <td>
-                           @foreach ($rs->menus as $menu)
-                          <li>{{$menu->name }}
-                          ({{ number_format($menu->pivot->harga, 0, ',', '.') }}x
-                          {{ $menu->pivot->quantity }})</li>
-                            @endforeach</td>
-					                <td class="text-end">{{ number_format($rs->total_pembayaran, 0, ',', '.')}}</td>
-					                <td>{{ $rs->tanggal_pembayaran}}</td>
-					                <td><a href="#" id="{{$rs->id }}" class="btn btn-outline-secondary align-items-center mx-1" data-bs-toggle="modal" data-bs-target="#DetailModal"><i class="ti-eye"></i></a>
-                            <button type="submit"  value="print" class="btn btn-outline-secondary align-items-center" id="print-button"><i class="icon-printer"></i></button></td>
-              					</tr>
-              				@endforeach
-              			</tbody>
-              		</table>
+                <thead>
+                  <tr>
+                      <th>No</th>
+                      <th>Nota</th>
+                      <th>Item</th>
+                      <th>Jumlah</th>
+                      <th>Harga</th>
+                      <th>Total</th>
+                      <th>Tanggal</th>
+                      <th>-</th>
+                  </tr>
+                </thead>
+                  @foreach ($data as $no => $rs)
+                    @php $rowCount = count($rs->menus); @endphp
+                    @foreach ($rs->menus as $index => $menu)
+                      <tr>
+                        @if ($index === 0)
+                          <td rowspan="{{ $rowCount }}">{{ $no + 1 }}</td>
+                          <td rowspan="{{ $rowCount }}">{{ $rs->id }}</td>
+                        @endif
+                        <td>{{ $menu->name }}</td>
+                        <td>{{ $menu->pivot->quantity }}</td>
+                        <td>{{ number_format($menu->pivot->harga, 0, ',', '.') }}</td>
+                        @if ($index === 0)
+                          <td rowspan="{{ $rowCount }}" class="text-end">{{ number_format($rs->total_pembayaran, 0, ',', '.') }}</td>
+                          <td rowspan="{{ $rowCount }}">{{ $rs->tanggal_pembayaran }}</td>
+                          <td rowspan="{{ $rowCount }}">
+                            <a href="#" id="{{ $rs->id }}" class="btn btn-outline-secondary align-items-center mx-1" data-bs-toggle="modal" data-bs-target="#DetailModal"><i class="ti-eye"></i></a>
+                            <button type="submit" value="print" class="btn btn-outline-secondary align-items-center" id="print-button"><i class="icon-printer"></i></button>
+                          </td>
+                        @endif
+                      </tr>
+                    @endforeach
+                  @endforeach
+              </table>
+
                 </div>
               </div>
             </div>
@@ -151,7 +158,11 @@
   <!-- Custom js for this page-->
   <script type="text/javascript">
   	$("#tait").DataTable({
-              order: [0, 'asc']
+             pageLength: 10,
+        paging: true,
+        searching: true,
+        order: [[0, "asc"]],
+        columnDefs: [{ orderable: false, targets: [11] }]
             });
   </script>
   @endpush

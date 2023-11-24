@@ -56,7 +56,7 @@ class LoginController extends Controller
         ]);
 
         $user = User::create([
-            'foto' => 'face-1.jpg',
+            'foto' => 'default-user.png',
             'name' => $request->name,
             'username' => $request->username,
             'password' => Hash::make($request->password),

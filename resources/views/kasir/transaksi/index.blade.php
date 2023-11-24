@@ -87,15 +87,13 @@ input:focus {
                         <div class="card">
                             <div class="card-body">
                                   <h5 class="card-title">Pilih Menu yang Dipesan : </h5>
-                                  <form action="{{route('K.A.C')}}" class="row">
-                                    <div class="form-group w-75">
-                                      <select name="selected_items[]" id="sI" multiple placeholder="Choose Menu" class="select2 ps-3 w-100" data-allow-clear="1" required>
+                                  <form action="{{route('K.A.C')}}" class="d-flex">
+                                      <select name="selected_items[]" id="sI" multiple placeholder="Choose Menu" class="form-control select2 ps-3" data-allow-clear="1" required>
                                         @foreach($item as $li)
                                             <option value="{{$li->id}}"><span class="me-2">{{$li->name}}</span>--<span class="me-2">{{$li->harga}}</span>--<span>{{$li->stok}}</span></option>
                                         @endforeach
                                       </select>
-                                    </div>
-                                      <button class="btn btn-primary w-25 h-25" id="adi">Tambah</button>
+                                      <button class="btn btn-primary ms-2" id="adi">Tambah</button>
                                 </form>
                             </div>
                         </div>
@@ -404,126 +402,5 @@ function calculateMoReturn() {
             })
     </script>
   @endif
-@if(session('TRXPrint'))
-<script>
-
-    var transaksi = @json(session('TRXPrint'));
-
-var contentToPrint = `
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 8px;
-        }
-        .container {
-            width: 300px;
-            margin: 0 auto;
-        }
-        .logo {
-            text-align: center;
-        }
-        .logo img {
-            max-width: 100px;
-        }
-        .transaction-details {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .transaction-details p {
-            margin: 5px 0;
-        }
-        .item-list {
-            margin-top: 20px;
-        }
-        .item {
-            display: flex;
-            justify-content: space-evenly;
-            margin-bottom: 5px;
-            margin-bottom : 4px;
-        }
-        th,td{
-        	font-size : 10px;
-        }
-        .thead{
-        	border-bottom : 1px solid black;
-        }
-        .closing-text {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .jcb{
-        	display : flex;
-        	justify-content : space-between;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="logo">
-            <img src="{{asset('assets/images/logos/logo-light-1.png')}}" alt="Logo">
-        </div>
-        <div class="jcb">
-            <p>Tanggal Transaksi:</p><p> {{session('TRXPrint')->tanggal_pembayaran}}</p>
-        </div>
-        <div class="jcb">
-            <p>ID Transaksi:</p><p> {{session('TRXPrint')->nomor_transaksi}}</p>
-        </div>
-        <div class="item-list">
-            <table border="0">
-            <thead>
-            	<tr class="thead">
-            		<th>No</th>
-            		<th>Nama</th>
-            		<th>Jumlah</th>
-            		<th>SubTotal</th>
-            	</tr>
-            </thead>
-            	<tbody>
-	            @foreach (session('TRXPrint')->menus as $no => $menu)
-	            	<tr>
-	            		<td>{{$no+1}}</td>
-		                <td>{{$menu->nama }}</td>
-		                <td>{{ $menu->pivot->harga }}</td>
-		                <td>{{ $menu->pivot->quantity }})</td>
-		            </tr>
-	            @endforeach
-	            </tbody>
-           	</table>
-        </div>
-        <div class="jcb">
-            <p>Total Pembayaran:</p><p> {{session('TRXPrint')->total_pembayaran}}</p>
-        </div>
-        <div class="jcb">
-            <p>Uang Pembayaran:</p><p> {{session('TRXPrint')->uang_pembayaran}}</p>
-        </div>
-        <div class="jcb">
-            <p>Kembalian:</p><p> {{session('TRXPrint')->kembalian}}</p>
-        </div>
-        <div class="closing-text">
-            <p>Terima kasih atas kunjungan Anda!</p>
-        </div>
-    </div>
-</body>
-</html>
-`;
-console.log(contentToPrint);
-
-// Otomatis cetak setelah halaman dimuat
-    window.onload = function() {
-        var printWindow = window.open('', '', 'width=600,height=600');
-        printWindow.document.open();
-        printWindow.document.write(contentToPrint);
-        printWindow.document.close();
-        printWindow.print();
-        printWindow.close();
-    };
-
-
-</script>
-@php session()->forget('TRXPrint'); @endphp
-@endif
 
 @endpush

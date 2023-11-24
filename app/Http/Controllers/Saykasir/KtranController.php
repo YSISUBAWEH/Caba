@@ -105,7 +105,20 @@ public function addCart_transaksi(Request $request)
                 'quantity' => $details['quantity'],
                 'harga' => $details['harga'],
             ]);
+            //stok
+            $item = Item::find($id);
+            $item->stok -= $details['quantity'];
+            $item->save();
+
+            $stokK = SKeluar::create([
+                'id' => "SKBC-" . date("YmdHis"),
+                'item_id' => $id,
+                'users_id' => auth()->user()->id,
+                'stok' => $details['quantity'],
+                'deskripsi' => 'Barang Dijual',
+            ]);
         }
+
         // dd($transaksi,$transaksi->menus);
         // Hapus cart setelah checkout
         session()->forget('Tcart');
@@ -168,5 +181,9 @@ public function riwayat_transaksi(){
     $auth=auth()->user();
     $data= Transaksi::with('menus')->orderBy('tanggal_pembayaran', 'desc')->get();
     return view('kasir.transaksi.riwayat',compact('auth','data'));
+}
+function struk_riwayat() {
+    $auth = auth()->user();
+    return view('kasir.print',compact('auth'));
 }
 }
