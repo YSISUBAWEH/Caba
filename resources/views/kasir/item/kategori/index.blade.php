@@ -1,78 +1,83 @@
 @extends('kasir.layout.layout')
     @push('css')
-        <!-- plugins:css -->
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/feather/feather.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/mdi/css/materialdesignicons.min.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/ti-icons/css/themify-icons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/typicons/typicons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/simple-line-icons/css/simple-line-icons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/css/vendor.bundle.base.css')}}">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="{{asset('arsip/admin/css/vertical-layout-light/style.css')}}">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="{{asset('arsip/admin/images/favicon.png')}}" />
-  <style type="text/css">
-    .dataTables_wrapper {
-    font-size: 10px;
-    position: relative;
-    clear: both;
-    *zoom: 1;
-    zoom: 1;
-}
-.dataTables_length label{
-  font-size: 0;
-  }
-  </style>
+    <link rel="shortcut icon" href="{{asset('arsip/template/assets/images/favicon.ico')}}">
+
+        <!-- Datatables css -->
+        <link href="{{asset('arsip/template/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('arsip/template/assets/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('arsip/template/assets/vendor/datatables.net-fixedcolumns-bs5/css/fixedColumns.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('arsip/template/assets/vendor/datatables.net-fixedheader-bs5/css/fixedHeader.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('arsip/template/assets/vendor/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('arsip/template/assets/vendor/datatables.net-select-bs5/css/select.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Theme Config Js -->
+        <script src="{{asset('arsip/template/assets/js/hyper-config.js')}}"></script>
+
+        <!-- App css -->
+        <link href="{{asset('arsip/template/assets/css/app-creative.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
+
+        <!-- Icons css -->
+        <link href="{{asset('arsip/template/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     @endpush
     @section('content')
-          <div class="row">
-            <div class="col-lg-6 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                    <div class="d-sm-flex justify-content-between align-items-start">
-                        <div>
-                            <h4 class="card-title">Data Kategori</h4>
-                            <p class="card-description">
-                                Tabel Kategori
-                            </p>
-                        </div>
-                        <div>
-                            <button href="javascript:void(0)" class="btn btn-primary text-white btn-rounded mb-0 me-0" data-bs-toggle="modal" data-bs-target="#addKateModal">
-                                <i class="mdi mdi-plus"></i></button>
-                        </div>
-                    </div>
-                  <div class="table-responsive" id="loadK">
-                    <h5 class="text-center text-secondary my-5">Loading...</h5>
-                  </div>
-                </div>
+    <div class="row">
+      <div class="col-12">
+          <div class="page-title-box">
+              <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                      <li class="breadcrumb-item"><a href="javascript: void(0);"></a></li>
+                      <li class="breadcrumb-item"><a href="javascript: void(0);">Icons</a></li>
+                      <li class="breadcrumb-item active">Remix Icons</li>
+                  </ol>
               </div>
-            </div>
-            <div class="col-lg-6 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                    <div class="d-sm-flex justify-content-between align-items-start">
-                        <div>
-                            <h4 class="card-title">Data Units</h4>
-                            <p class="card-description">
-                                Tabel unit
-                            </p>
-                        </div>
-                        <div>
-                            <button href="javascript:void(0)" class="btn btn-primary text-white btn-rounded mb-0 me-0" data-bs-toggle="modal" data-bs-target="#addUnitModal">
-                                <i class="mdi mdi-plus"></i></button>
-                        </div>
-                    </div>
-                  <div class="table-responsive" id="loadU">
-                    <h5 class="text-center text-secondary my-5">Loading...</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
+              <h4 class="page-title">Items</h4>
           </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h4 class="header-title">Data Kategori</h4>
+                <p class="text-muted font-14">
+                  ..
+                </p>
+              </div>
+              <div>
+                <button class="btn btn-outline-primary ps-2 pe-2" data-bs-toggle="modal" data-bs-target="#addKateModal">
+                <i class="ri-add-box-line"></i></button>
+              </div>
+            </div>
+            <div class="table-responsive" id="loadK">
+              <h4 class="header-title text-center">Memuat ... </h4>  
+            </div>
+          </div> <!-- end card body-->
+        </div> <!-- end card -->
+      </div><!-- end col-->
+      <div class="col-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h4 class="header-title">Data Unit</h4>
+                <p class="text-muted font-14">
+                  ..
+                </p>
+              </div>
+              <div>
+                <button class="btn btn-outline-primary ps-2 pe-2" data-bs-toggle="modal" data-bs-target="#addUnitModal">
+                <i class="ri-add-box-line"></i></button>
+              </div>
+            </div>
+            <div class="table-responsive" id="loadU">
+              <h4 class="header-title text-center">Memuat ... </h4> 
+            </div>
+          </div> <!-- end card body-->
+        </div> <!-- end card -->
+      </div><!-- end col-->
+    </div><!-- end row -->
 
 
         <!-- content-wrapper ends -->
@@ -84,11 +89,11 @@
           </div>
         </footer>
         <!-- partial -->
-{{-- new menu modal kate--}}
+<!--  new menu modal kate -->
 
 <div class="modal fade" id="addKateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
   data-bs-backdrop="static" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm modal-right">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Add New Kategori</h5>
@@ -96,16 +101,15 @@
       </div>
       <form action="#" method="POST" id="add_kate_form" enctype="multipart/form-data">
         @csrf
-        <div class="modal-body p-4">
+        <div class="modal-body p-2">
           <div class="row">
-            <div class="my-2">
-              <label class="fw-semibold mb-1" for="name">name</label>
-              <input type="text" name="name" class="form-control" placeholder="Name" required>
+            <div class="mb-3">
+              <label class="fw-semibold mb-1" for="name">Kategori</label>
+              <input type="text" name="name" class="form-control" placeholder="Masukkan Kategori Bary" required>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="submit" id="add_kate_btn" class="btn btn-primary">Add Kategori</button>
         </div>
       </form>
@@ -116,25 +120,22 @@
 {{-- edit menu modal kate --}}
 <div class="modal fade" id="editKaModal" tabindex="-1" aria-labelledby="exampleModalLabel"
   data-bs-backdrop="static" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-sm modal-right">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Menu</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Kategori</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="#" method="POST" id="edit_kate_form" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="kame_id" id="kame_id">
-          <div class="modal-body p-4 bg-light">
-            <div class="row">
-              <div class="my-2">
-                <label for="name">name</label>
-                <input type="text" name="name" id="name" class="form-control" placeholder="Name" required>
+          <div class="modal-body p-2">
+              <div class="mb-3">
+                <label for="name">Kategori</label>
+                <input type="text" name="name" id="name" class="form-control" required>
               </div>
-            </div>
           </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="submit" id="edit_kate_btn" class="btn btn-success">Update Kategori</button>
         </div>
       </form>
@@ -146,7 +147,7 @@
 
 <div class="modal fade" id="addUnitModal" tabindex="-1" aria-labelledby="exampleModalLabel"
   data-bs-backdrop="static" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm modal-right">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Tambah Unit baru</h5>
@@ -155,15 +156,12 @@
       <form action="#" method="POST" id="add_unit_form" enctype="multipart/form-data">
         @csrf
         <div class="modal-body p-4">
-          <div class="row">
-            <div class="my-2">
-              <label class="fw-semibold mb-1" for="name">name</label>
-              <input type="text" name="name" class="form-control" placeholder="Name" required>
+            <div class="mb-3">
+              <label class="fw-semibold mb-1" for="name">Unit / Ukuran / Berat</label>
+              <input type="text" name="name" class="form-control" placeholder="Masukkan Unit / Ukuran / Berat" required>
             </div>
-          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="submit" id="add_unit_btn" class="btn btn-primary">Add Kategori</button>
         </div>
       </form>
@@ -171,13 +169,12 @@
   </div>
 </div>
  
-{{-- edit menu modal kate --}}
 <div class="modal fade" id="editUnModal" tabindex="-1" aria-labelledby="exampleModalLabel"
   data-bs-backdrop="static" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm modal-right">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Menu</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Unit</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="#" method="POST" id="edit_unit_form" enctype="multipart/form-data">
@@ -185,14 +182,13 @@
         <input type="hidden" name="unit_id" id="unit_id">
           <div class="modal-body p-4 bg-light">
             <div class="row">
-              <div class="my-2">
-                <label for="name">name</label>
-                <input type="text" name="nameU" id="nameU" class="form-control" placeholder="Name" required>
+              <div class="mb-3">
+                <label for="name">Unit / Ukuran / Berat</label>
+                <input type="text" name="nameU" id="nameU" class="form-control" required>
               </div>
             </div>
           </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="submit" id="edit_unit_btn" class="btn btn-success">Update Kategori</button>
         </div>
       </form>
@@ -202,20 +198,33 @@
  
   @endsection
   @push('script')
-  <!-- plugins:js -->
-  <script src='https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js'></script>
-  <script src="{{asset('arsip/admin/vendors/js/vendor.bundle.base.js')}}"></script>
+   <!-- Vendor js -->
+        <script src="{{asset('arsip/template/assets/js/vendor.min.js')}}"></script>
 
-  <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- endinject -->
-  <!-- inject:js -->
-  <script src="{{asset('arsip/admin/js/off-canvas.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/hoverable-collapse.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/template.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/settings.js')}}"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
+        <!-- Code Highlight js -->
+        <script src="{{asset('arsip/template/assets/vendor/highlightjs/highlight.pack.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/vendor/clipboard/clipboard.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/js/hyper-syntax.js')}}"></script>
+
+        <!-- Datatables js -->
+        <script src="{{asset('arsip/template/assets/vendor/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/vendor/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/vendor/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/vendor/datatables.net-fixedcolumns-bs5/js/fixedColumns.bootstrap5.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/vendor/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/vendor/datatables.net-keytable/js/dataTables.keyTable.min.js')}}"></script>
+        <script src="{{asset('arsip/template/assets/vendor/datatables.net-select/js/dataTables.select.min.js')}}"></script>
+        <!-- Datatable Demo Aapp js -->
+        <script src="{{asset('arsip/template/assets/js/pages/demo.datatable-init.js')}}"></script>
+
+        <!-- App js -->
+        <script src="{{asset('arsip/template/assets/js/app.min.js')}}"></script>
   <script>
     //kate
     $(function() {
@@ -235,11 +244,10 @@
           dataType: 'json',
           success: function(response) {
             if (response.status == 200) {
-              Swal.fire(
-                'Added!',
-                'Kategori berhasil ditambah !',
-                'success'
-              )
+              $('#alert-show').html('<div class="alert alert-success d-flex" role="alert">'+
+            '<p class="me-2"><i class="ri-check-line me-2"></i> Kayegori Berhasil Ditambahkan !</p>'+
+            '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>'+
+          '</div>')
               loadKa();
             }
             $("#add_kate_btn").text('Add Kategori');
@@ -282,11 +290,10 @@
           dataType: 'json',
           success: function(response) {
             if (response.status == 200) {
-              Swal.fire(
-                'Updated!',
-                'Kategori Berhasil diubah!',
-                'success'
-              )
+              $('#alert-show').html('<div class="alert alert-success d-flex" role="alert">'+
+            '<p class="me-2"><i class="ri-check-line me-2"></i> Kategori Berhasil Dirubah !</p>'+
+            '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>'+
+        '</div>')
               loadKa();
             }
             $("#edit_kate_btn").text('Update Menu');
@@ -363,11 +370,10 @@
           dataType: 'json',
           success: function(response) {
             if (response.status == 200) {
-              Swal.fire(
-                'Added!',
-                'Kategori berhasil ditambah !',
-                'success'
-              )
+              $('#alert-show').html('<div class="alert alert-success d-flex" role="alert">'+
+            '<p class="me-2"><i class="ri-check-line me-2"></i> Unit Berhasil Ditambahkan !</p>'+
+            '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>'+
+            '</div>')
               loadUn();
             }
             $("#add_unit_btn").text('Add Kategori');
@@ -411,11 +417,10 @@
           dataType: 'json',
           success: function(response) {
             if (response.status == 200) {
-              Swal.fire(
-                'Updated!',
-                'Kategori Berhasil diubah!',
-                'success'
-              )
+              $('#alert-show').html('<div class="alert alert-success d-flex" role="alert">'+
+            '<p class="me-2"><i class="ri-check-line me-2"></i> Unit Berhasil Dirubah !</p>'+
+            '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>'+
+            '</div>')
               loadUn();
             }
             $("#edit_unit_btn").text('Update Unit');

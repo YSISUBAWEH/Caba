@@ -20,9 +20,10 @@ class MuserController extends Controller
     $users = User::where('toko_id', $tokoId)->get();
         $tokoId = auth()->user()->toko_id;
 
-        $get_menu = User::where('toko_id', $tokoId)
-                ->where('role_id', 2)
-                ->get();
+        // $get_menu = User::where('toko_id', $tokoId)
+        //         ->where('role_id', 2)
+        //         ->get();
+        $get_menu = User::get();
         $output = '';
         if ($get_menu->count() > 0) {
             $output .= '<table id="taus" class="table table-stripped">
@@ -37,14 +38,15 @@ class MuserController extends Controller
             </thead>
             <tbody>';
             foreach ($get_menu as $no=>$rs) {
+                $path = asset('arsip/data/img/user');
                 $output .= '<tr>
                 <td>' . $no+1 . '</td>
-                <td><img src="'. $rs->foto .'" class="img-thumbnail"></td>
+                <td><img src="'.$path . '/'. $rs->foto .'" class="img-thumbnail"></td>
                 <td>' . $rs->name . '</td>s
                 <td>' . $rs->username . '</td>
                 <td>
-                  <a href="#" id="' . $rs->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editItModal"><i class="ti-pencil"></i></a>
-                  <a href="#" id="' . $rs->id . '" class="text-danger mx-1 deleteIcon"><i class="ti-trash"></i></a>
+                  <a href="#" id="' . $rs->id . '" class="text-primary editIcon" data-bs-toggle="modal" data-bs-target="#edit-item-modal"><i class="ri-ball-pen-fill"></i></a>
+                  <a href="#" id="' . $rs->id . '" class="text-danger deleteIcon"><i class="ri-delete-bin-5-fill"></i></a>
                 </td>
               </tr>';
             }

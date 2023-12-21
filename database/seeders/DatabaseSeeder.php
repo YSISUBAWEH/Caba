@@ -33,6 +33,9 @@ class DatabaseSeeder extends Seeder
         ]);
         
         User::factory(5)->create();
-
     }
 }
+
+        // $this->call(UnitSeeder::class);
+        // $this->call(KategoriSeeder::class);
+        // $this->call(ItemSeeder::class);

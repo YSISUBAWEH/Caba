@@ -1,78 +1,99 @@
 @extends('kasir.layout.layout')
     @push('css')
-        <!-- plugins:css -->
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/feather/feather.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/mdi/css/materialdesignicons.min.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/ti-icons/css/themify-icons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/typicons/typicons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/simple-line-icons/css/simple-line-icons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/css/vendor.bundle.base.css')}}">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="{{asset('arsip/admin/css/vertical-layout-light/style.css')}}">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="{{asset('arsip/admin/images/favicon.png')}}" />
+<!-- App favicon -->
+   <link rel="shortcut icon" href="{{asset('arsip/template/assets/images/favicon.ico')}}">
+  <!-- Datatables css -->
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-fixedcolumns-bs5/css/fixedColumns.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-fixedheader-bs5/css/fixedHeader.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-select-bs5/css/select.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+  <!-- Theme Config Js -->
+   <script src="{{asset('arsip/template/assets/js/hyper-config.js')}}"></script>
+  <!-- App css -->
+   <link href="{{asset('arsip/template/assets/css/app-creative.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
+  <!-- Icons css -->
+    <link href="{{asset('arsip/template/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     @endpush
     @section('content')
       <div class="row">
-        <div class="col-lg-6 grid-margin stretch-card">
-          <div class="card">
-              <div class="card-body">
-                <div class="d-sm-flex justify-content-between align-items-start">
+      <div class="col-12">
+          <div class="page-title-box">
+              <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                      <li class="breadcrumb-item"><a href="javascript: void(0);"></a></li>
+                      <li class="breadcrumb-item"><a href="javascript: void(0);">Icons</a></li>
+                      <li class="breadcrumb-item active">Remix Icons</li>
+                  </ol>
+              </div>
+              <h4 class="page-title">Inventory Stok</h4>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <ul class="nav nav-tabs nav-bordered mb-3">
+              <li class="nav-item w-50 text-end">
+                <a href="#show-stok-in" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
+                  Stok Masuk
+                </a>
+              </li>
+              <li class="nav-item w-50">
+                <a href="#show-stok-out" data-bs-toggle="tab" aria-expanded="true" class="nav-link">
+                  Stok Keluar
+                </a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane show active" id="show-stok-in">
+                <div class="d-flex justify-content-between">
                   <div>
-                    <h4 class="card-title">Stok Masuk</h4>
-                    <p class="card-description">
-                      
+                    <h4 class="header-title">Data Stok Masuk</h4>
+                    <p class="text-muted font-14">
+                      Digunakan untuk menambah stok pada suatu item
                     </p>
                   </div>
-                  <div class="mb-2">
-                    <button href="javascript:void(0)" class="add btn btn-icons btn-rounded btn-primary todo-list-add-btn text-white me-0 pl-12p" data-bs-toggle="modal" data-bs-target="#addSmModal">
-                      <i class="mdi mdi-sign-caution p-0"></i></button>
+                  <div>
+                    <button class="btn btn-outline-primary ps-2 pe-2" data-bs-toggle="modal" data-bs-target="#addSmModal">
+                    <i class="ri-add-box-line"></i></button>
                   </div>
                 </div>
                 <div class="table-responsive" id="loadSM">
-                  <p class="text-center text-secondary my-5">Loading...</p>
+                  <h4 class="header-title text-center">Memuat ... </h4>  
                 </div>
               </div>
-            </div>
-          </div>
-
-        <div class="col-lg-6 grid-margin stretch-card">
-          <div class="card">
-              <div class="card-body">
-                <div class="d-sm-flex justify-content-between align-items-start">
+              <div class="tab-pane show" id="show-stok-out">
+                <div class="d-flex justify-content-between">
                   <div>
-                    <h4 class="card-title">Stok Keluar</h4>
-                    <p class="card-description">
-                      
+                    <h4 class="header-title">Data Stok Keluar</h4>
+                    <p class="text-muted font-14">
+                      Data Diperoleh dari input kasir apabila barang rusak, kadaluarsa , dll.
+                      Data Juga diperoleh dari setiap penjualan yang terjadi.
                     </p>
                   </div>
-                  <div class="mb-2">
-                    <button href="javascript:void(0)" class="add btn btn-icons btn-rounded btn-primary todo-list-add-btn text-white me-0 pl-12p" data-bs-toggle="modal" data-bs-target="#addSkModal">
-                      <i class="mdi mdi-plus"></i></button>
+                  <div>
+                    <button class="btn btn-outline-primary ps-2 pe-2" data-bs-toggle="modal" data-bs-target="#addSkModal">
+                    <i class="ri-add-box-line"></i></button>
                   </div>
                 </div>
                 <div class="table-responsive" id="loadSK">
-                  <h5 class="text-center text-secondary my-5">Loading...</h5>
+                  <h4 class="header-title text-center">Memuat ... </h4> 
                 </div>
               </div>
             </div>
-          </div>
-        
-        </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:-->
-        
-        <!-- partial -->
-        
+          </div> <!-- end card body-->
+        </div> <!-- end card -->
+      </div><!-- end col-->
+    </div><!-- end row -->
+
         <!-- modal stok masuk -->
 
 <div class="modal fade" id="addSmModal" tabindex="-1" aria-labelledby="exampleModalLabel"
   data-bs-backdrop="static" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm modal-right">
     <div class="modal-content bg-light">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Stok Masuk</h5>
@@ -80,43 +101,38 @@
       </div>
       <form action="#" method="POST" id="add_sm_form" enctype="multipart/form-data">
         @csrf
-        <div class="modal-body p-4">
-          <div class="row">
-            <div class="my-2">
-              <label for="items">Pilih Items</label>
-                <select class="form-control" name="item" required>
-                  <option selected="Select">----Pilih Items----</option>
-                  @foreach ($item as $i)
-                    <option value="{{ $i->id }}" class="p-2" style="padding: 0; display: flex; justify-content: space-between; align-items: center;">
-    <span style="margin: 0;">{{ $i->name }}</span>---
-    <span style="margin: 0;">{{ $i->stok }}</span>
-</option>
-
-
-                  @endforeach
-                </select>
-            </div>
-            <div class="my-2">
-              <label for="items">Pilih Suplayer</label>
-                <select class="form-control" name="suplayer">
-                  <option selected="Select">----Pilih Suplayer---</option>
-                  @foreach ($suplayer as $s)
-                    <option value="{{ $s->id }}">{{ $s->name }}</option>
-                  @endforeach
-                </select>
-            </div>
-            <div class="my-2">
-               <label for="name">stok</label>
-               <input type="text" name="stok" class="form-control" placeholder="stok">
-            </div>
-            <div class="my-2">
-              <label class="fw-semibold mb-1" for="harga">Deskripsi</label>
-              <input type="text-area" name="deskripsi" class="form-control" placeholder="Deskripsi" required>
-            </div>
-            </div>
+        <div class="modal-body p-2">
+          <div class="mb-3">
+            <label for="items">Pilih Items</label>
+            <select class="form-control" name="item" required>
+              <option selected="Select">----Pilih Items----</option>
+              @foreach ($item as $i)
+              <option value="{{ $i->id }}" class="p-2" style="padding: 0; display: flex; justify-content: space-between; align-items: center;">
+                <span style="margin: 0;">{{ $i->name }}</span>---
+                <span style="margin: 0;">{{ $i->stok }}</span>
+              </option>
+              @endforeach
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="items">Pilih Suplayer</label>
+            <select class="form-control" name="suplayer">
+              <option selected="Select">----Pilih Suplayer---</option>
+              @foreach ($suplayer as $s)
+                <option value="{{ $s->id }}">{{ $s->name }}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="name">Jumlah Stok Masuk</label>
+            <input type="text" name="stok" class="form-control" placeholder="Masukkan Jumlah Stok">
+          </div>
+          <div class="mb-3">
+            <label class="fw-semibold mb-1" for="harga">Deskripsi</label>
+            <input type="text-area" name="deskripsi" class="form-control" placeholder="Masukkan Deskripsi" required>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="submit" id="add_sm_btn" class="btn btn-primary">Selesai</button>
         </div>
       </form>
@@ -128,7 +144,7 @@
 
 <div class="modal fade" id="addSkModal" tabindex="-1" aria-labelledby="exampleModalLabel"
   data-bs-backdrop="static" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm modal-right">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Stok Keluar</h5>
@@ -136,29 +152,27 @@
       </div>
       <form action="#" method="POST" id="add_sk_form" enctype="multipart/form-data">
         @csrf
-        <div class="modal-body p-4">
-          <div class="row">
-            <div class="my-2">
-              <label for="items">Pilih Items</label>
-                <select class="form-control" name="item" required>
-                  <option selected="Select">----Pilih Items----</option>
-                  @foreach ($item as $i)
-                    <option value="{{ $i->id }}">{{ $i->name }}</option>
-                  @endforeach
-                </select>
-            </div>
-            <div class="my-2">
-               <label for="name">stok</label>
-               <input type="text" name="stok" class="form-control" placeholder="stok">
-            </div>
-            <div class="my-2">
-              <label class="fw-semibold mb-1" for="harga">Deskripsi</label>
-              <input type="text-area" name="deskripsi" class="form-control" placeholder="Deskripsi" required>
-            </div>
+        <div class="modal-body p-2">
+          <div class="mb-3">
+            <label for="items">Pilih Items</label>
+            <select class="form-control" name="item" required>
+              <option selected="Select">----Pilih Items----</option>
+              @foreach ($item as $i)
+                <option value="{{ $i->id }}">{{ $i->name }}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="mb-3">
+             <label for="name">Jumlah Stok Keluar</label>
+             <input type="text" name="stok" class="form-control" placeholder="Masukkan Jumlah Stok">
+          </div>
+          <div class="mb-3">
+            <label class="fw-semibold " for="harga">Deskripsi</label>
+            <input type="text-area" name="deskripsi" class="form-control" placeholder="Masukkan Deskripsi" required>
+          </div>
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="submit" id="add_sk_btn" class="btn btn-primary">Selesai</button>
         </div>
       </form>
@@ -167,19 +181,32 @@
 </div>
   @endsection
   @push('script')
-  <!-- plugins:js -->
-  <script src='https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js'></script>
-  <script src="{{asset('arsip/admin/vendors/js/vendor.bundle.base.js')}}"></script>
-
-  <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- endinject -->
-  <!-- inject:js -->
-  <script src="{{asset('arsip/admin/js/off-canvas.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/hoverable-collapse.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/template.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/settings.js')}}"></script>
-  <!-- endinject -->
+  
+  <!-- Vendor js -->
+  <script src="{{asset('arsip/template/assets/js/vendor.min.js')}}"></script>  
+  <!-- Code Highlight js -->
+  <script src="{{asset('arsip/template/assets/vendor/highlightjs/highlight.pack.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/clipboard/clipboard.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/js/hyper-syntax.js')}}"></script>  
+  <!-- Datatables js -->
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-fixedcolumns-bs5/js/fixedColumns.bootstrap5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-keytable/js/dataTables.keyTable.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-select/js/dataTables.select.min.js')}}"></script>
+  
+  <!-- Datatable Demo Aapp js -->
+  <script src="{{asset('arsip/template/assets/js/pages/demo.datatable-init.js')}}"></script>  
+  <!-- App js -->
+  <script src="{{asset('arsip/template/assets/js/app.min.js')}}"></script>
   <!-- Custom js for this page-->
   <script type="text/javascript">
     
@@ -200,11 +227,10 @@
           dataType: 'json',
           success: function(response) {
             if (response.status == 200) {
-              Swal.fire(
-                'Added!',
-                'Item berhasil ditambah !',
-                'success'
-              )
+              $('#alert-show').html('<div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" role="alert">'+
+            '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>'+
+            '<i class="ri-information-line me-2"></i> Stok berhasil ditambah !'+
+        '</div>');
               loadSMasuk();
             }
             $("#add_sm_btn").text('Stok Masuk');

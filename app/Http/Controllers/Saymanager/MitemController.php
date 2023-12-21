@@ -25,7 +25,7 @@ class MitemController extends Controller
         $get_menu = Item::all();
         $output = '';
         if ($get_menu->count() > 0) {
-            $output .= '<table id="tait" class="table table-stripped">
+            $output .= '<table id="tait" class="table activate-select table-striped dt-responsive nowrap w-100">
             <thead>
               <tr>
                 <th>No</th>
@@ -35,7 +35,6 @@ class MitemController extends Controller
                 <th class="text-center">Stok</th>
                 <th>Kategori</th>
                 <th>Unit</th>
-                <th></th>
               </tr>
             </thead>
             <tbody>';
@@ -49,16 +48,12 @@ class MitemController extends Controller
                 <td class="text-end">' . $rs->stok . '</td>
                 <td>' . $rs->kate->name . '</td>
                 <td>' . $rs->uk->name . '</td>
-                <td>
-                  <a href="#" id="' . $rs->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editItModal"><i class="ti-pencil"></i></a>
-                  <a href="#" id="' . $rs->id . '" class="text-danger mx-1 deleteIcon"><i class="ti-trash"></i></a>
-                </td>
              </tr>';
             }
             $output .= '</tbody></table>';
             echo $output;
         } else {
-            echo '<h1 class="text-center text-secondary my-5">Data Item Kosong!</h1>';
+            echo '<h4 class="text-center text-secondary my-5">Data Item Kosong!</h4>';
         }
     }
     public function stok() {
@@ -74,7 +69,7 @@ class MitemController extends Controller
         $get_menu = SMasuk::all();
         $output = '';
         if ($get_menu->count() > 0) {
-            $output .= '<table id="tasm" class="table table-stripped">
+            $output .= '<table id="tasm" class="table activate-select table-striped dt-responsive nowrap w-100">
             <thead>
               <tr>
                 <th>No</th>
@@ -90,7 +85,7 @@ class MitemController extends Controller
                 <td>'. $rs->item->name .'</td>
                 <td class="text-end">' . $rs->stok . '</td>
                 <td class="text-center">
-                  <a href="#" data-id="' . $rs->id . '" data-item="' . $rs->item->name . '" data-stok="' . $rs->stok . '" data-sup="' . $rs->suplayer->name . '" data-des="' . $rs->deskripsi . '" class="btn btn-outline-secondary detail-button-sm align-items-center mx-1" data-bs-toggle="modal" data-bs-target="#DetailModalSM"><i class="mdi mdi-eye"></i></a>
+                  <a href="#" data-id="' . $rs->id . '" data-item="' . $rs->item->name . '" data-stok="' . $rs->stok . '" data-sup="' . $rs->suplayer->name . '" data-des="' . $rs->deskripsi . '" class="text-primary detail-button-sm align-items-center mx-1" data-bs-toggle="modal" data-bs-target="#DetailModalSM"><i class="ri-eye-line"></i></a>
                 </td>
               </tr>';
             }
@@ -104,7 +99,7 @@ class MitemController extends Controller
         $get_menu = SKeluar::all();
         $output = '';
         if ($get_menu->count() > 0) {
-            $output .= '<table id="task" class="table table-stripped">
+            $output .= '<table id="task" class="table activate-select table-striped dt-responsive nowrap w-100">
             <thead>
               <tr>
                 <th>No</th>
@@ -120,7 +115,7 @@ class MitemController extends Controller
                 <td>'. $rs->item->name .'</td>
                 <td class="text-end">' . $rs->stok . '</td>
                 <td class="text-center">
-                  <a href="#" data-id="' . $rs->id . '" data-item="' . $rs->item->name . '" data-stok="' . $rs->stok . '" data-us="' . $rs->user->name . '" data-des="' . $rs->deskripsi . '" class="btn btn-outline-secondary detail-button-sk align-items-center mx-1" data-bs-toggle="modal" data-bs-target="#DetailModalSK"><i class="mdi mdi-eye"></i></a>
+                  <a href="#" data-id="' . $rs->id . '" data-item="' . $rs->item->name . '" data-stok="' . $rs->stok . '" data-us="' . $rs->user->name . '" data-des="' . $rs->deskripsi . '" class="text-primary detail-button-sk align-items-center mx-1" data-bs-toggle="modal" data-bs-target="#DetailModalSK"><i class="ri-eye-line"></i></a>
                 </td>
               </tr>';
             }
@@ -139,7 +134,7 @@ class MitemController extends Controller
         $get_menu = Suplayer::all();
         $output = '';
         if ($get_menu->count() > 0) {
-            $output .= '<table id="tasu" class="table table-stripped">
+            $output .= '<table id="tasu" class="table activate-select table-striped dt-responsive nowrap w-100">
             <thead>
               <tr>
                 <th>No</th>
@@ -157,7 +152,7 @@ class MitemController extends Controller
                 <td>' . $rs->telepon . '</td>
                 <td>' . $rs->alamat . '</td>
                 <td class="text-center">
-                  <a href="#" data-id="' . $rs->id . '" data-name="' . $rs->name . '" data-tel="' . $rs->telepon . '" data-al="' . $rs->alamat . '" data-des="' . $rs->deskripsi . '" class="btn btn-outline-secondary detail-button-su align-items-center mx-1" data-bs-toggle="modal" data-bs-target="#DetailModalSU"><i class="mdi mdi-eye"></i></a>
+                  <a href="#" data-id="' . $rs->id . '" data-name="' . $rs->name . '" data-tel="' . $rs->telepon . '" data-al="' . $rs->alamat . '" data-des="' . $rs->deskripsi . '" class="text-primary detail-button-su align-items-center mx-1" data-bs-toggle="modal" data-bs-target="#DetailModalSU"><i class="ri-eye-line"></i></a>
                 </td>
               </tr>';
             }

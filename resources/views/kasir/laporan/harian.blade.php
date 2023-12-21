@@ -1,34 +1,55 @@
 @extends('kasir.layout.layout')
-    @push('css')
-        <!-- plugins:css -->
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/feather/feather.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/mdi/css/materialdesignicons.min.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/ti-icons/css/themify-icons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/typicons/typicons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/simple-line-icons/css/simple-line-icons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/css/vendor.bundle.base.css')}}">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="{{asset('arsip/admin/css/vertical-layout-light/style.css')}}">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="{{asset('arsip/admin/images/favicon.png')}}" />
-  <style type="text/css">
-    .dataTables_wrapper {
-    font-size: 10px;
-    position: relative;
-    clear: both;
-    *zoom: 1;
-    zoom: 1;
-}
-.dataTables_length label{
-  font-size: 0;
-  }
-  </style>
+   @push('css')
+<!-- App favicon -->
+   <link rel="shortcut icon" href="{{asset('arsip/template/assets/images/favicon.ico')}}">
+  <!-- Datatables css -->
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-fixedcolumns-bs5/css/fixedColumns.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-fixedheader-bs5/css/fixedHeader.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-select-bs5/css/select.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Daterangepicker css -->
+        <link rel="stylesheet" href="{{asset('arsip/template/assets/vendor/daterangepicker/daterangepicker.css')}}">
+  <!-- Theme Config Js -->
+   <script src="{{asset('arsip/template/assets/js/hyper-config.js')}}"></script>
+  <!-- App css -->
+   <link href="{{asset('arsip/template/assets/css/app-creative.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
+  <!-- Icons css -->
+    <link href="{{asset('arsip/template/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />   <link rel="shortcut icon" href="{{asset('arsip/template/assets/images/favicon.ico')}}">
+  <!-- Theme Config Js -->
+   <script src="{{asset('arsip/template/assets/js/hyper-config.js')}}"></script>
+  <!-- App css -->
+   <link href="{{asset('arsip/template/assets/css/app-creative.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
+  <!-- Icons css -->
+    <link href="{{asset('arsip/template/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     @endpush
     @section('content')
+     <div class="row">
+    <div class="col-12">
+      <div class="page-title-box">
+        <div class="page-title-right">
+              <form class="d-flex" action="{{route('K.F.LH')}}" method="POST">
+            @csrf
+                  <div class="input-group">
+                      <input type="text" class="form-control form-control-light" id="dash-daterange">
+                      <span class="input-group-text bg-primary border-primary text-white">
+                          <i class="mdi mdi-calendar-range font-13"></i>
+                      </span>
+                  </div>
+                  <button class="btn btn-primary ms-2">
+                      <i class="mdi mdi-autorenew"></i>
+                  </button>
+                  <a href="javascript: void(0);" class="btn btn-primary ms-1">
+                      <i class="mdi mdi-filter-variant"></i>
+                  </a>
+              </form>
+          </div>
+        <h4 class="page-title">Laporan</h4>
+      </div>
+    </div>
+  </div>
     <div class="col-lg-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
@@ -106,18 +127,40 @@
         <!-- partial --> 
   @endsection
   @push('script')
-  <!-- plugins:js -->
-  <script src="{{asset('arsip/admin/vendors/js/vendor.bundle.base.js')}}"></script>
+ 
+  <!-- Vendor js -->
+  <script src="{{asset('arsip/template/assets/js/vendor.min.js')}}"></script>  
 
-  <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- endinject -->
-  <!-- inject:js -->
-  <script src="{{asset('arsip/admin/js/off-canvas.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/hoverable-collapse.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/template.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/settings.js')}}"></script>
-  <!-- endinject -->
+  <!-- Daterangepicker js -->
+  <script src="{{asset('arsip/template/assets/vendor/daterangepicker/moment.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/daterangepicker/daterangepicker.js')}}"></script>
+  
+  <!-- Code Highlight js -->
+  <script src="{{asset('arsip/template/assets/vendor/highlightjs/highlight.pack.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/clipboard/clipboard.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/js/hyper-syntax.js')}}"></script>  
+  <!-- Datatables js -->
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-fixedcolumns-bs5/js/fixedColumns.bootstrap5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-keytable/js/dataTables.keyTable.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-select/js/dataTables.select.min.js')}}"></script>
+  
+  <!-- Datatable Demo Aapp js -->
+  <script src="{{asset('arsip/template/assets/js/pages/demo.datatable-init.js')}}"></script>  
+
+        <!-- Dashboard App js -->
+        <script src="{{asset('arsip/template/assets/js/pages/demo.dashboard.js')}}"></script>
+  <!-- App js -->
+  <script src="{{asset('arsip/template/assets/js/app.min.js')}}"></script>
   <!-- Custom js for this page-->
   <script type="text/javascript">
   	$("#tait").DataTable({

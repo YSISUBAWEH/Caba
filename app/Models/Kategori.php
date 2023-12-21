@@ -16,7 +16,7 @@ class Kategori extends Model
 
     public function item(): HasMany
     {
-        return $this->hasMany(Item::class);
+        return $this->hasMany(Item::class,'kode_kate','kode_kate');
     }
     public function uk(): HasMany
     {

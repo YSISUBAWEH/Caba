@@ -1,173 +1,214 @@
 @extends('kasir.layout.layout')
     @push('css')
-        <!-- plugins:css -->
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/feather/feather.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/mdi/css/materialdesignicons.min.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/ti-icons/css/themify-icons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/typicons/typicons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/simple-line-icons/css/simple-line-icons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/css/vendor.bundle.base.css')}}">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="{{asset('arsip/admin/css/vertical-layout-light/style.css')}}">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="{{asset('arsip/admin/images/favicon.png')}}" />
+<!-- App favicon -->
+   <link rel="shortcut icon" href="{{asset('arsip/template/assets/images/favicon.ico')}}">
+  <!-- Datatables css -->
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-fixedcolumns-bs5/css/fixedColumns.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-fixedheader-bs5/css/fixedHeader.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{asset('arsip/template/assets/vendor/datatables.net-select-bs5/css/select.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+   <link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css
+" rel="stylesheet">
+
+  <!-- Theme Config Js -->
+   <script src="{{asset('arsip/template/assets/js/hyper-config.js')}}"></script>
+  <!-- App css -->
+   <link href="{{asset('arsip/template/assets/css/app-creative.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
+  <!-- Icons css -->
+    <link href="{{asset('arsip/template/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     @endpush
     @section('content')
+    <div class="row">
+      <div class="col-12">
+          <div class="page-title-box">
+              <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                      <!-- <li class="breadcrumb-item"><a href="javascript: void(0);"></a></li>
+                      <li class="breadcrumb-item"><a href="javascript: void(0);">Icons</a></li>
+                      <li class="breadcrumb-item active">Remix Icons</li> -->
+                  </ol>
+              </div>
+              <h4 class="page-title">Items</h4>
+          </div>
+      </div>
+    </div>
       <div class="row">
-        <div class="col-lg-12 grid-margin stretch-card">
+        <div class="col-12">
           <div class="card">
-              <div class="card-body">
-                <div class="d-sm-flex justify-content-between align-items-start">
-                  <div>
-                    <h4 class="card-title card-title-dash">Data Item</h4>
-                    <p class="card-subtitle card-subtitle-dash">Tabel Informasi Item</p>
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <h4 class="header-title">Data Items</h4>
+                    
                   </div>
                   <div>
-                    <button href="javascript:void(0)" class="btn btn-primary text-white btn-rounded mb-0 me-0" data-bs-toggle="modal" data-bs-target="#addItemModal" type="button"><i class="mdi mdi-plus"></i></button>
+                    <button class="btn btn-outline-primary ps-2 pe-2" data-bs-toggle="modal" data-bs-target="#add-item-modal"><i class="ri-add-box-line"></i></button>
+                    <div class="dropdown">
+              <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="mdi mdi-dots-vertical"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <!-- item-->
+                <a href="{{route('K.PDF.item')}}" class="dropdown-item">print</a>
+              </div>
+            </div>
                   </div>
                 </div>
-                <div class="table-responsive" id="loadI">
-                  <h5 class="text-center text-secondary my-5">Loading...</h5>
+                <div class="table-responsive" id="multi-item-preview">
+                  <h4 class="header-title text-center">Memuat ... </h4>                                         
+                </div>
+                                    
+            </div> <!-- end card body-->
+          </div> <!-- end card -->
+        </div><!-- end col-->
+      </div> <!-- end row-->
+
+    <div id="add-item-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-full-width">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Menambah Item Baru</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+          </div>
+          <form enctype="multipart/form-data" id="add_item_form">
+            @csrf
+            <div class="modal-body p-2">
+              <div class="row mb-3">
+                <div class="col-4">
+                  <label class="fw-semibold mb-1" for="name">Bar-Code  Item / <span class="font-10">Opsional</span></label>
+                  <input type="text" name="sku" class="form-control" placeholder="Masukkan SKU / Bar-Code Item">
+                  <div class="error-form"></div>
+                </div>
+                <div class="col-4">
+                  <label class="fw-semibold mb-1" for="name">Nama Item</label>
+                  <input type="text" name="name" class="form-control" placeholder="Masukkan Nama Item" required>
+                  <div class="error-form"></div>
+                </div>                
+                <div class="col-4">
+                  <label class="fw-semibold mb-1" for="harga">Harga Item</label>
+                  <input type="text" name="harga" class="form-control" placeholder="Masukkan Harga Item" required>
+                  <div class="error-form"></div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-6">
+                  <label for="kategori_menu">Kategori</label>
+                    <select class="form-control" name="kategori" required>
+                      <option selected="Select">----Pilih Kategori Item----</option>
+                      @foreach ($kategori as $k)
+                        <option value="{{ $k->kode_kate }}">{{ $k->name }}</option>
+                      @endforeach
+                    </select>
+                    <div class="error-form"></div>
+                </div>
+                <div class="col-6">
+                  <label for="unit">Unit/Ukuran</label>
+                    <select class="form-control" name="unit" required>
+                      <option selected="Select">----Pilih Unit Item----</option>
+                      @foreach ($unit as $k)
+                        <option value="{{ $k->kode_uk }}">{{ $k->name }}</option>
+                      @endforeach
+                    </select>
+                    <div class="error-form"></div>
+                </div>  
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" id="add_item_btn" class="btn btn-primary w-100">Selesai</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+{{-- edit item --}}
+    <div id="edit-item-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-full-width">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Edit Item</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+          </div>
+          <form id="edit_item_form" enctype="multipart/form-data">
+            @csrf
+            <div class="modal-body">
+              <input type="hidden" name="me_id" id="me_id">
+              <input type="hidden" name="me_img" id="me_img">
+              <div class="row mb-3">
+                <div class="col-4">
+                  <label class="fw-semibold" for="name">Bar-Code  Item</label>
+                  <input type="text" name="sku" id="sku" class="form-control" placeholder="Masukkan SKU / Bar-Code Item" required>
+                </div>
+                <div class="col-4">
+                  <label for="name">Nama Item</label>
+                  <input type="text" name="name" id="name" class="form-control" placeholder="Masukkan Nama Item" required>
+                </div>
+                <div class="col-4">
+                  <label for="name">Harga Item</label>
+                  <input type="text" name="harga" id="harga" class="form-control" placeholder="Masukkan Harga Item" required>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-6">
+                  <label for="kategori_menu">Kategori</label>
+                  <select class="form-control" name="kategori" id="kategori" required>
+                      <option selected="Select">----Pilih Kategori----</option>
+                   @foreach ($kategori as $k)
+                      <option value="{{ $k->kode_kate}}" {{ $k->kode_kate == 1 ? 'selected' : '' }}>{{ $k->name }}</option>
+                   @endforeach
+                  </select>
+                </div>
+                <div class="col-6">
+                  <label for="kategori_menu">Unit</label>
+                  <select class="form-control" name="unit" id="unit" required>
+                      <option selected="Select">----Pilih Unit----</option>
+                   @foreach ($unit as $k)
+                      <option value="{{ $k->kode_uk }}" {{ $k->kode_uk == 1 ? 'selected' : '' }}>{{ $k->name }}</option>
+                   @endforeach
+                  </select>
                 </div>
               </div>
             </div>
-          </div>
+            <div class="modal-footer">
+              <button type="submit" id="edit_item_btn" class="btn btn-success w-100">Selesai</button>
+            </div>
+          </form>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:-->
-        
-        <!-- partial -->
-        {{-- new menu modal kate--}}
-
-<div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-  data-bs-backdrop="static" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Item</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="#" method="POST" id="add_item_form" enctype="multipart/form-data">
-        @csrf
-        <div class="modal-body p-4">
-          <div class="row">
-            <div class="my-2">
-              <label class="fw-semibold mb-1" for="name">name</label>
-              <input type="text" name="name" class="form-control" placeholder="Name" required>
-            </div>
-            <div class="my-2">
-              <label class="fw-semibold mb-1" for="harga">harga</label>
-              <input type="text" name="harga" class="form-control" placeholder="Name" required>
-            </div>
-            <div class="my-2">
-              <label for="kategori_menu">Kategori</label>
-                <select class="form-control" name="kategori" required>
-                  <option selected="Select">----Pilih Kategori----</option>
-                  @foreach ($kategori as $k)
-                    <option value="{{ $k->kode_kate }}">{{ $k->name }}</option>
-                  @endforeach
-                </select>
-            </div>
-            <div class="my-2">
-              <label for="unit">Unit/Size</label>
-                <select class="form-control" name="unit" required>
-                  <option selected="Select">----Pilih Unit----</option>
-                  @foreach ($unit as $k)
-                    <option value="{{ $k->kode_uk }}">{{ $k->name }}</option>
-                  @endforeach
-                </select>
-            </div>
-
-            <div class="my-2">
-              <label for="foto">Select Image</label>
-              <input type="file" name="img" class="form-control" required>
-            </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" id="add_item_btn" class="btn btn-primary">Selesai</button>
-        </div>
-      </form>
     </div>
-  </div>
-</div>
- 
-{{-- edit menu modal kate --}}
-<div class="modal fade" id="editItModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-  data-bs-backdrop="static" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Item</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form action="#" method="POST" id="edit_item_form" enctype="multipart/form-data">
-        @csrf
-        <input type="hidden" name="me_id" id="me_id">
-        <input type="hidden" name="me_img" id="me_img">
-          <div class="modal-body p-4 bg-light">
-            <div class="row">
-              <div class="my-2">
-                <label for="name">name</label>
-                <input type="text" name="name" id="name" class="form-control" placeholder="Name" required>
-              </div>
-              <div class="my-2">
-                <label for="name">name</label>
-                <input type="text" name="harga" id="harga" class="form-control" placeholder="Harga" required>
-              </div>
-              <div class="my-2">
-              <label for="kategori_menu">Kategori</label>
-              <select class="form-control" name="kategori" id="kategori" required>
-                  <option selected="Select">----Pilih Kategori----</option>
-               @foreach ($kategori as $k)
-                  <option value="{{ $k->kode_kate}}" {{ $k->kode_kate == 1 ? 'selected' : '' }}>{{ $k->name }}</option>
-               @endforeach
-            </select>
-            </div>
-            <div class="my-2">
-              <label for="kategori_menu">Unit</label>
-              <select class="form-control" name="unit" id="unit" required>
-                  <option selected="Select">----Pilih Unit----</option>
-               @foreach ($unit as $k)
-                  <option value="{{ $k->kode_uk }}" {{ $k->kode_uk == 1 ? 'selected' : '' }}>{{ $k->name }}</option>
-               @endforeach
-              </select>
-            </div>
-            <div class="my-2">
-              <label for="foto">Select Foto</label>
-              <input type="file" name="img" class="form-control" required>
-            </div>
-              <div class="mt-2" id="img"></div>
-            </div>
-          </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" id="edit_item_btn" class="btn btn-success">Update Kategori</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
   @endsection
   @push('script')
-  <!-- plugins:js -->
-  <script src='https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js'></script>
-  <script src="{{asset('arsip/admin/vendors/js/vendor.bundle.base.js')}}"></script>
-
-  <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- endinject -->
-  <!-- inject:js -->
-  <script src="{{asset('arsip/admin/js/off-canvas.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/hoverable-collapse.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/template.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/settings.js')}}"></script>
-  <!-- endinject -->
+  
+  <!-- Vendor js -->
+  <script src="{{asset('arsip/template/assets/js/vendor.min.js')}}"></script>  
+  <!-- Code Highlight js -->
+  <script src="{{asset('arsip/template/assets/vendor/highlightjs/highlight.pack.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/clipboard/clipboard.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/js/hyper-syntax.js')}}"></script>  
+  <!-- Datatables js -->
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-fixedcolumns-bs5/js/fixedColumns.bootstrap5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-keytable/js/dataTables.keyTable.min.js')}}"></script>
+  <script src="{{asset('arsip/template/assets/vendor/datatables.net-select/js/dataTables.select.min.js')}}"></script>
+ <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js
+"></script>
+  <!-- Datatable Demo Aapp js -->
+  <script src="{{asset('arsip/template/assets/js/pages/demo.datatable-init.js')}}"></script>  
+  <!-- App js -->
+  <script src="{{asset('arsip/template/assets/js/app.min.js')}}"></script>
   <!-- Custom js for this page-->
   <script type="text/javascript">
     
@@ -178,6 +219,7 @@
       $("#add_item_form").submit(function(e) {
         e.preventDefault();
         const fd = new FormData(this);
+        console.log(fd);
         $("#add_item_btn").text('Memproses ...');
         $.ajax({
           url: '{{ route('K.C.item') }}',
@@ -189,24 +231,33 @@
           dataType: 'json',
           success: function(response) {
             if (response.status == 200) {
-              Swal.fire(
-                'Added!',
-                'Item berhasil ditambah !',
-                'success'
-              )
+              $('#alert-show').html('<div class="alert alert-success d-flex" role="alert">'+
+            '<p class="me-2"><i class="ri-check-line me-2"></i> Item Berhasil Ditambahkan !</p>'+
+            '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>'+
+        '</div>')
               loadItem();
             }
-            $("#add_item_btn").text('Add Kategori');
+            $("#add_item_btn").text(' Item');
             $("#add_item_form")[0].reset();
-            $("#addItemModal").modal('hide');
+            $("#add-item-modal").modal('hide');
           },error: function(data){
-       var errors = data.responseJSON;
-       console.log(errors);
-   }
+            if (data.status == 422) {
+                var errors = data.responseJSON.errors;
+                var errorHtml = '<div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show mt-1" role="alert">';
+                $.each(errors, function(key, value) {
+                    errorHtml += '<i class="ri-close-line me-2"></i><strong>Gagal </strong>' + value + '<br>';
+                });
+                errorHtml += '</div>';
+                $('#error-form').html(errorHtml);
+            }
+            $("#add_item_btn").text(' Item');
+           var errors = data.responseJSON;
+           console.log(errors);
+          }
         });
       });
  
-      // edit employee ajax request
+      // edit item ajax request
       $(document).on('click', '.editIcon', function(e) {
         e.preventDefault();
         let id = $(this).attr('id');
@@ -218,14 +269,12 @@
             _token: '{{ csrf_token() }}'
           },
           success: function(response) {
+             $("#sku").val(response.SKU);
              $("#name").val(response.name);
             $("#harga").val(response.harga);
             $("#kategori").val(response.kode_kate);
             $("#unit").val(response.kode_uk);
-            $("#img").html(
-              `<img src="/arsip/data/img/${response.img}" width="180" class="img-fluid img-thumbnail">`);
             $("#me_id").val(response.id);
-            $("#me_img").val(response.img);
           }
         });
       });
@@ -245,54 +294,54 @@
           dataType: 'json',
           success: function(response) {
             if (response.status == 200) {
-              Swal.fire(
-                'Updated!',
-                'Item Berhasil diubah!',
-                'success'
-              )
+               $('#alert-show').html('<div class="alert alert-success d-flex" role="alert">'+
+            '<p class="me-2"><i class="ri-check-line me-2"></i> Item Berhasil Di Ubah !</p>'+
+            '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>'+
+        '</div>')
               loadItem();
             }
             $("#edit_item_btn").text('Update Menu');
             $("#edit_item_form")[0].reset();
-            $("#editItModal").modal('hide');
-          }
+            $("#edit-item-modal").modal('hide');
+          },error: function(data){
+       var errors = data.responseJSON;
+       console.log(errors);
+   }
         });
       });
  
-      // delete employee ajax request
-      $(document).on('click', '.deleteIcon', function(e) {
-        e.preventDefault();
-        let id = $(this).attr('id');
+      $(document).on('click', '.deleteIcon', function (e) {
+    e.preventDefault();
+    let id = $(this).attr('id');
+
+    if (confirm("Are you sure?")) {
         let csrf = '{{ csrf_token() }}';
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            $.ajax({
-              url: '{{ route('K.D.item') }}',
-              method: 'delete',
-              data: {
+        $.ajax({
+            url: '{{ route('K.D.item') }}',
+            method: 'delete',
+            data: {
                 id: id,
                 _token: csrf
-              },
-              success: function(response) {
-                Swal.fire(
-                  'Deleted!',
-                  'Your file has been deleted.',
-                  'success'
-                )
-                loadItem();
-              }
-            });
-          }
-        })
-      }); 
+            },
+            success: function (response) {
+                if (response.status == 200) {
+                    $('#alert-show').html('<div class="alert alert-success d-flex" role="alert">' +
+                        '<p class="me-2"><i class="ri-check-line me-2"></i> Item Berhasil Di Ubah !</p>' +
+                        '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>' +
+                        '</div>');
+
+                    loadItem();
+                }
+            },
+            error: function (data) {
+                var errors = data.responseJSON;
+                console.log(errors);
+            }
+        });
+    }
+});
+
+
  
       // fetch all kate ajax request
       loadItem();
@@ -302,7 +351,7 @@
           url: '{{ route('K.L.item') }}',
           method: 'get',
           success: function(response) {
-            $("#loadI").html(response);
+            $("#multi-item-preview").html(response);
             $("#tait").DataTable({
               order: [0, 'asc']
             });

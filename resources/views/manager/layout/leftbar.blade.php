@@ -44,7 +44,7 @@
                         <li class="side-nav-title">Navigation</li>
 
                         <li class="side-nav-item">
-                            <a href="{{route('K.index')}}" class="side-nav-link">
+                            <a href="{{route('M.index')}}" class="side-nav-link">
                                 <i class="uil-home-alt"></i>
                                 <span> Dashboard </span>
                             </a>
@@ -54,44 +54,29 @@
 
                         <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#sidebarItem" aria-expanded="false" aria-controls="sidebarItem" class="side-nav-link">
-                                <i class="uil-box"></i>
+                                <i class="uil-store"></i>
                                 <span> Manajemen Items </span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <div class="collapse" id="sidebarItem">
                                 <ul class="side-nav-second-level">
                                     <li>
-                                        <a href="{{route('K.item')}}">Items</a>
+                                        <a href="{{route('M.item')}}">Items</a>
                                     </li>
                                     <li>
-                                        <a href="{{route('K.kate')}}">Kategori & Unit</a>
+                                        <a href="{{route('M.stok')}}">Stok</a>
                                     </li>
                                     <li>
-                                        <a href="{{route('K.stok')}}">Stok</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('K.suplay')}}">Suplayer</a>
+                                        <a href="{{route('M.suplay')}}">Suplayer</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-
                         <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarEmail" aria-expanded="false" aria-controls="sidebarEmail" class="side-nav-link">
-                                <i class="uil-clipboard-alt"></i>
-                                <span> Laporan </span>
-                                <span class="menu-arrow"></span>
+                            <a href="{{route('M.user')}}" class="side-nav-link">
+                                <i class="ri-user-line"></i>
+                                <span> Users </span>
                             </a>
-                            <div class="collapse" id="sidebarEmail">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="{{route('K.R.T')}}">Riwayat Penjualan</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('K.P.L')}}">Profit</a>
-                                    </li>
-                                </ul>
-                            </div>
                         </li>
 
 

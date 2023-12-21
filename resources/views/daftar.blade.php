@@ -1,105 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-layout="topnav" data-topbar-color="dark">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>BaBa Kasir</title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/feather/feather.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/mdi/css/materialdesignicons.min.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/ti-icons/css/themify-icons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/typicons/typicons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/simple-line-icons/css/simple-line-icons.css')}}">
-  <link rel="stylesheet" href="{{asset('arsip/admin/vendors/css/vendor.bundle.base.css')}}">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="{{asset('arsip/admin/css/vertical-layout-light/style.css')}}">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="{{asset('arsip/admin/images/welogo.png')}}" />
+    <meta charset="utf-8" />
+    <title>Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{asset('arsip/template/assets/images/favicon.ico')}}">
+
+    <!-- Theme Config Js -->
+    <script src="{{asset('arsip/template/assets/js/hyper-config.js')}}"></script>
+
+    <!-- App css -->
+    <link href="{{asset('arsip/template/assets/css/app-creative.min.css')}}" rel="stylesheet" type="text/css" id="app-style" />
+
+    <!-- Icons css -->
+    <link href="{{asset('arsip/template/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
-  <div class="container-scroller">
-    <div class="container-fluid page-body-wrapper full-page-wrapper">
-      <div class="content-wrapper d-flex align-items-center auth px-0">
-        <div class="row w-100 mx-0">
-          <div class="col-lg-4 mx-auto">
-            <div class="auth-form-light rounded-3 shadow-lg text-left p-5">
-              <div class="brand-logo w-100 align-items-center">
-                <img src="{{asset('arsip/admin/images/welogo.png')}}" alt="logo">
-              </div>
-              <h4>Daftar Sekarang !!</h4>
-              <h6 class="fw-light"></h6>
-              @if (session()->has('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<body class="authentication-bg pb-0">
+
+    <div class="auth-fluid">
+        <!--Auth fluid left content -->
+        <div class="auth-fluid-form-box">
+            <div class="card-body d-flex flex-column h-100 gap-3">
+
+                <!-- Logo -->
+                <div class="auth-brand text-center text-lg-start">
+                    <a href="index.html" class="logo-dark">
+                        <span><img src="{{asset('arsip/template/assets/images/1.png')}}" alt="dark logo" height="22"></span>
+                    </a>
+                    <a href="index.html" class="logo-light">
+                        <span><img src="{{asset('arsip/template/assets/images/2.png')}}" alt="logo" height="22"></span>
+                    </a>
                 </div>
-            @endif
-              <form method="post" action="{{route('daftar')}}" class="pt-3">
-                @csrf
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" name="name" placeholder="Enter Your Name">
+
+                <div class="my-auto">
+                    <!-- title-->
+                    <h4 class="mt-0">Sign Up</h4>
+                    <p class="text-muted mb-4">Create a new account to access Baba Kasir.</p>
+
+                    <!-- form -->
+                    <form action="{{route('daftar')}}" method="post">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input class="form-control" type="text" name="name" required="" placeholder="Enter your name">
+                            @error('name')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input class="form-control" type="text" name="username" required="" placeholder="Enter your username">
+                            @error('username')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input class="form-control" type="password" name="password" required="" placeholder="Enter your password">
+                            @error('password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="password_confirmation" class="form-label">Confirm Password</label>
+                            <input class="form-control" type="password" name="password_confirmation" required="" placeholder="Repeat your password">
+                            @error('password_confirmation')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="d-grid mb-0 text-center">
+                            <button class="btn btn-primary" type="submit"><i class="mdi mdi-account-plus"></i> Sign Up </button>
+                        </div>
+                    </form>
+                    <!-- end form-->
                 </div>
-                @error('username')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                @enderror
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" name="username" placeholder="Enter Your Username">
-                </div>
-                @error('username')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                @enderror
-                <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" name="password" placeholder="Enter Your password">
-                </div>
-                @error('password')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                @enderror
-                <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" name="password_confirmation" id="password_confirmation" placeholder="Repeat your password" value="{{ old('password_confirmation') }}"/>
-                </div>
-                @error('password')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                @enderror
-                <div class="mt-3">
-                  <button type="submit" class="btn btn-primary w-100 font-weight-medium auth-form-btn">SIGN UP</button>
-                </div>
-              </form>
-            </div>
-          </div>
+
+                <!-- Footer-->
+                <footer class="footer footer-alt">
+                    <p class="text-muted">Already have an account? <a href="{{route('login')}}" class="text-muted ms-1"><b>Log In</b></a></p>
+                </footer>
+
+            </div> <!-- end .card-body -->
         </div>
-      </div>
-      <!-- content-wrapper ends -->
+        <!-- end auth-fluid-form-box-->
+
+        <!-- Auth fluid right content -->
+        <div class="auth-fluid-right text-center">
+            <div class="auth-user-testimonial">
+                <h2 class="mb-3">Welcome To Baba Kasir</h2>
+                <p class="lead"><i class="mdi mdi-format-quote-open"></i> Jalani Harimu dengan Senyuman . <i class="mdi mdi-format-quote-close"></i>
+                </p>
+                <p>
+                    - Weh
+                </p>
+            </div> <!-- end auth-user-testimonial-->
+        </div>
+        <!-- end Auth fluid right content -->
     </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-  <!-- plugins:js -->
-  <script src="{{asset('arsip/admin/vendors/js/vendor.bundle.base.js')}}"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page -->
-  <script src="{{asset('arsip/admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
-  <!-- End plugin js for this page -->
-  <!-- inject:js -->
-  <script src="{{asset('arsip/admin/js/off-canvas.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/hoverable-collapse.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/template.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/settings.js')}}"></script>
-  <script src="{{asset('arsip/admin/js/todolist.js')}}"></script>
-  <!-- endinject -->
+    <!-- end auth-fluid-->
+    <!-- Vendor js -->
+    <script src="{{asset('arsip/template/assets/js/vendor.min.js')}}"></script>
+
+    <!-- App js -->
+    <script src="{{asset('arsip/template/assets/js/app.min.js')}}"></script>
+
 </body>
 
 </html>

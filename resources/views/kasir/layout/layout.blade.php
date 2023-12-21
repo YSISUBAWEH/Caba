@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8" />
-        <title>Layout Detached | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+        <title>Baba Cashier</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -14,7 +14,10 @@
     <body>
         <!-- Begin page -->
         <div class="wrapper">
-
+           <!-- Success Alert -->
+    <div class="position-fixed top-0 end-0 p-3" id="alert-show" style="z-index: 1030">
+        
+    </div>
             <!-- ========== Topbar Start ========== -->
             <div class="navbar-custom">
                 @include('kasir.layout.navbar')

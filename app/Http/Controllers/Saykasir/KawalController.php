@@ -13,6 +13,10 @@ use App\Models\Transaksi;
 use App\Models\Suplayer;
 use App\Models\SMasuk;
 use App\Models\SKeluar;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
+
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class KawalController extends Controller
 {
@@ -52,11 +56,10 @@ class KawalController extends Controller
         $get_menu = Kategori::all();
         $output = '';
         if ($get_menu->count() > 0) {
-            $output .= '<table id="taka" class="table">
+            $output .= '<table id="taka" class="table table-striped dt-responsive nowrap w-100">
             <thead>
               <tr>
                 <th>No</th>
-                <th>Kode</th>
                 <th>Nama</th>
                 <th>Action</th>
               </tr>
@@ -65,11 +68,10 @@ class KawalController extends Controller
             foreach ($get_menu as $no=>$rs) {
                 $output .= '<tr>
                 <td>' . $no+1 . '</td>
-                <td>'. $rs->kode_kate .'</td>
                 <td>' . $rs->name . '</td>
                 <td>
-                  <a href="#" id="' . $rs->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editKaModal"><i class="ti-pencil"></i></a>
-                  <a href="#" id="' . $rs->id . '" class="text-danger mx-1 deleteIcon"><i class="ti-trash"></i></a>
+                  <a href="#" id="' . $rs->id . '" class="text-primary editIcon" data-bs-toggle="modal" data-bs-target="#editKaModal"><i class="ri-ball-pen-fill"></i></a>
+                  <a href="#" id="' . $rs->id . '" class="text-danger deleteIcon"><i class="ri-delete-bin-5-fill"></i></a>
                 </td>
               </tr>';
             }
@@ -121,11 +123,10 @@ class KawalController extends Controller
         $get_unit = Unit::all();
         $output = '';
         if ($get_unit->count() > 0) {
-            $output .= '<table id="taun" class="table">
+            $output .= '<table id="taun" class="table table-striped dt-responsive nowrap w-100">
             <thead>
               <tr>
                 <th>No</th>
-                <th>Kode</th>
                 <th>Nama</th>
                 <th>Action</th>
               </tr>
@@ -134,11 +135,10 @@ class KawalController extends Controller
             foreach ($get_unit as $no=>$rs) {
                 $output .= '<tr>
                 <td>' . $no+1 . '</td>
-                <td>'. $rs->kode_uk .'</td>
                 <td>' . $rs->name . '</td>
                 <td>
-                  <a href="#" id="' . $rs->id . '" class="text-success mx-1 editIconU" data-bs-toggle="modal" data-bs-target="#editUnModal"><i class="ti-pencil"></i></a>
-                  <a href="#" id="' . $rs->id . '" class="text-danger mx-1 deleteIconU"><i class="ti-trash"></i></a>
+                  <a href="#" id="' . $rs->id . '" class="text-primary editIconU" data-bs-toggle="modal" data-bs-target="#editUnModal"><i class="ri-ball-pen-fill"></i></a>
+                  <a href="#" id="' . $rs->id . '" class="text-danger deleteIconU"><i class="ri-delete-bin-5-fill"></i></a>
                 </td>
               </tr>';
             }
@@ -197,7 +197,7 @@ class KawalController extends Controller
         $get_menu = Item::all();
         $output = '';
         if ($get_menu->count() > 0) {
-            $output .= '<table id="tait" class="table table-stripped">
+            $output .= '<table id="tait" class="table activate-select dt-responsive table-striped dt-responsive nowrap w-100">
             <thead>
               <tr>
                 <th>No</th>
@@ -222,8 +222,8 @@ class KawalController extends Controller
                 <td>' . $rs->kate->name . '</td>
                 <td>' . $rs->uk->name . '</td>
                 <td>
-                  <a href="#" id="' . $rs->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editItModal"><i class="ti-pencil"></i></a>
-                  <a href="#" id="' . $rs->id . '" class="text-danger mx-1 deleteIcon"><i class="ti-trash"></i></a>
+                  <a href="#" id="' . $rs->id . '" class="text-primary editIcon" data-bs-toggle="modal" data-bs-target="#edit-item-modal"><i class="ri-ball-pen-fill"></i></a>
+                  <a href="#" id="' . $rs->id . '" class="text-danger deleteIcon"><i class="ri-delete-bin-5-fill"></i></a>
                 </td>
              </tr>';
             }
@@ -235,16 +235,31 @@ class KawalController extends Controller
     }
  
     public function create_item(Request $request) {
+        try {
+            $request->validate([
+                'name' => 'required',
+                'harga' => 'required|numeric',
+                'kategori' => 'required',
+                'unit' => 'required',
+                // Sesuaikan aturan validasi sesuai kebutuhan
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'status' => 422,
+                'errors' => $e->errors(),
+            ]);
+        }
+        // bikin id
+        $currentDate = now()->format('Ymd');
+        $ItemCount = Item::whereDate('created_at', today())->count() + 1;
+        $formattedCount = sprintf('%04d', $ItemCount);
+        $idI = "KI-" . $currentDate . $formattedCount;
 
-        $path = public_path('arsip/data/img');
-        !is_dir($path) &&
-            mkdir($path, 0777, true);
-
-        $imageName = time() . '.' . $request->img->extension();
-        $request->img->move($path, $imageName);
+        //skuvalue
+        $skuValue = $request->filled('sku') ? $request->sku : '0';
 
         $kameData = [
-            'id' => "KI-" . date("YmdHis"),'name' => $request->name, 'harga' => $request->harga,'kode_kate' => $request->kategori,'kode_uk' => $request->unit, 'img' => $imageName,'stok'=>'0','SKU'=>'0',
+            'id' => $idI,'name' => $request->name, 'harga' => $request->harga,'kode_kate' => $request->kategori,'kode_uk' => $request->unit, 'stok'=>'0','SKU'=>$skuValue,
         ];
         Item::create($kameData);
         return response()->json([
@@ -259,28 +274,27 @@ class KawalController extends Controller
     }
  
     public function update_item(Request $request) {
-        $imageName='';
         $me = Item::find($request->me_id);
-        if ($request->hasFile('img')) {
-            $path = public_path('arsip/data/img');
-            !is_dir($path) &&
-                mkdir($path, 0777, true);
 
-            $imageName = time() . '.' . $request->img->extension();
-            $request->img->move($path, $imageName);
-            if ($me->item) {
-                Storage::delete('public/images/' . $me->foto);
-            }
-        } else {
-            $imageName = $request->me_foto;
-        }
+        //skuvalue
+        $skuValue = $request->filled('sku') ? $request->sku : '0';
 
-        $meData = ['name' => $request->name, 'harga' => $request->harga,'kode_kate' => $request->kategori,'kode_uk' => $request->unit, 'img' => $imageName,'stok'=>'0',];
+        $meData = ['name' => $request->name, 'harga' => $request->harga,'kode_kate' => $request->kategori,'kode_uk' => $request->unit, 'stok'=>'0','SKU'=>$skuValue];
  
         $me->update($meData);
         return response()->json([
             'status' => 200,
         ]);
+    }
+    public function print_item(Request $request) {
+        $item = Item::all();
+        $data = [
+            'title' => 'Data Item Toko' . auth()->user()->toko->nama,
+            'date' => date('d/m/y'),
+            'item' => $item
+                    ];
+         $pdf = Pdf::loadView('kasir.print.item', $data)->setOptions(['defaultFont' => 'sans-serif']);
+            return $pdf->download('users_list.pdf');
     }
  
     public function delete_item(Request $request) {
@@ -322,8 +336,8 @@ class KawalController extends Controller
                 <td>' . $rs->alamat . '</td>
                 <td>' . $rs->deskripsi . '</td>
                 <td>
-                  <a href="#" id="' . $rs->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editSuModal"><i class="ti-pencil"></i></a>
-                  <a href="#" id="' . $rs->id . '" class="text-danger mx-1 deleteIcon"><i class="ti-trash"></i></a>
+                  <a href="#" id="' . $rs->id . '" class="text-primary editIcon" data-bs-toggle="modal" data-bs-target="#editSuModal"><i class="ri-ball-pen-fill"></i></a>
+                  <a href="#" id="' . $rs->id . '" class="text-danger deleteIcon"><i class="ri-delete-bin-5-fill"></i></a>
                 </td>
               </tr>';
             }
@@ -402,7 +416,7 @@ class KawalController extends Controller
                 <td>'. $rs->suplayer->name .'</td>
                 <td>'. $rs->deskripsi .'</td>
                 <td>
-                  <a href="#" id="' . $rs->id . '" class="text-danger mx-1 deleteIcon" data-item="' . $rs->item->id . '"><i class="ti-trash"></i></a>
+                  <a href="#" id="' . $rs->id . '" class="text-danger deleteIcon" data-item="' . $rs->item->id . '"><i class="ri-delete-bin-5-fill"></i></a>
                 </td>
               </tr>';
             }
@@ -478,7 +492,7 @@ class KawalController extends Controller
                 <td class="text-end">' . $rs->stok . '</td>
                 <td>'. $rs->deskripsi .'</td>
                 <td class="text-center">
-                  <a href="#" id="' . $rs->id . '" class="text-danger mx-1 deleteIconK" data-item="' . $rs->item->id . '"><i class="ti-trash"></i></a>
+                  <a href="#" id="' . $rs->id . '" class="text-danger deleteIconK" data-item="' . $rs->item->id . '"><i class="ri-delete-bin-5-fill"></i></a>
                 </td>
               </tr>';
             }
@@ -490,8 +504,21 @@ class KawalController extends Controller
     }
  
     public function create_stokK(Request $request) {
+    // Get the current date
+    $currentDate = now()->format('Ymd');
+
+    // Get the count of stock outputs for the current date
+    $stokKeluarCount = SKeluar::whereDate('created_at', today())->count() + 1;
+
+    // Format the count with leading zeros
+    $formattedCount = sprintf('%04d', $stokKeluarCount);
+
+    // Create the ID by combining the date and formatted count
+    $id = "SK-" . $currentDate . $formattedCount;
+
+    // Create the stock output record
     $stokMasuk = SKeluar::create([
-        'id' => "SKBC-" . date("YmdHis"),
+        'id' => $id,
         'item_id' => $request->item,
         'users_id' => auth()->user()->id,
         'stok' => $request->stok,
@@ -527,56 +554,75 @@ class KawalController extends Controller
         $stokKeluar->delete();
     }
     //end-of-kategori
-    public function bulan_laporan() {
-    $auth = auth()->user();
 
-    $bulanl = [];
-    $tanggalTerbaru = now();
-    $bulanTerbaru = $tanggalTerbaru->format('n');
-    $tahunTerbaru = $tanggalTerbaru->format('Y');
-    $bulanTertua = 1;
+    public function profit_laporan() {
+        $auth = auth()->user();
+        $today = Carbon::now()->toDateString();
 
-    for ($i = $bulanTerbaru; $i >= $bulanTertua; $i--) {
-        $bulanl[$i] = date('F', mktime(0, 0, 0, $i, 1));
+        $totalP = DB::table('transaksi')
+                ->whereDate('created_at', $today)
+                ->sum('total_pembayaran');
+
+        $itemT = DB::table('item_transaksi')
+                    ->join('transaksi', 'transaksi.id', '=', 'item_transaksi.transaksi_id')
+                    ->whereDate('transaksi.created_at', $today)
+                    ->sum('quantity');
+
+        return view('kasir.laporan.profit', compact('auth', 'totalP', 'itemT'));
     }
-    $selectB = $bulanTerbaru;
-    $data = Transaksi::selectRaw('MONTH(tanggal_pembayaran) as bulan, YEAR(tanggal_pembayaran) as tahun')
-        ->selectRaw('SUM(total_pembayaran) as total_pembayaran, MONTHNAME(tanggal_pembayaran) as nama_bulan')
-        ->selectRaw('SUM(item_transaksi.quantity) as total_quantity')
-        ->join('item_transaksi', 'transaksi.id', '=', 'item_transaksi.transaksi_id')
-        ->whereYear('tanggal_pembayaran', $tahunTerbaru)
-        ->whereMonth('tanggal_pembayaran', $bulanTerbaru)
-        ->groupBy('tahun', 'bulan', 'nama_bulan')
-        ->get();
+    public function filter_profit_laporan(Request $request) {
+        $auth = auth()->user();
+        $dateRange = $request->date;
 
-    return view('kasir.laporan.bulan', compact('bulanl','selectB', 'auth','data'));
-}
-	public function filter_bulanan_laporan(Request $request) {
+        // Memproses range tanggal
+        list($start_date, $end_date) = explode(' - ', $dateRange);
 
-		$auth = auth()->user();
-		$bulanl = [];
-	    $tanggalTerbaru = now();
-	    $bulanTerbaru = $tanggalTerbaru->format('n');
-	    $tahunTerbaru = $tanggalTerbaru->format('Y');
-	    $bulanTertua = 1;
+        // Mengubah format tanggal
+$startDate = Carbon::parse($start_date)->toDateString();
+$endDate = Carbon::parse($end_date)->toDateString();
 
-	    for ($i = $bulanTerbaru; $i >= $bulanTertua; $i--) {
-	        $bulanl[$i] = date('F', mktime(0, 0, 0, $i, 1));
-	    }
+        // Mengambil data sesuai dengan range tanggal
+        $totalP = DB::table('transaksi')
+            ->whereBetween(DB::raw('DATE(created_at)'), [$startDate, $endDate])
+            ->sum('total_pembayaran');
 
-	    $selectB = $request->bulan;
-	    $data = Transaksi::selectRaw('MONTH(tanggal_pembayaran) as bulan, YEAR(tanggal_pembayaran) as tahun')
-	        ->selectRaw('SUM(total_pembayaran) as total_pembayaran, MONTHNAME(tanggal_pembayaran) as nama_bulan')
-	        ->selectRaw('SUM(item_transaksi.quantity) as total_quantity')
-	        ->join('item_transaksi', 'transaksi.id', '=', 'item_transaksi.transaksi_id')
-	        ->whereYear('tanggal_pembayaran', $request->tahun)
-	        ->whereMonth('tanggal_pembayaran', $request->bulan)
-	        ->groupBy('tahun', 'bulan', 'nama_bulan')
-	        ->get();
+        $itemT = DB::table('item_transaksi')
+            ->join('transaksi', 'item_transaksi.transaksi_id', '=', 'transaksi.id')
+            ->whereBetween(DB::raw('DATE(transaksi.created_at)'), [$startDate, $endDate])
+            ->sum('quantity');
 
-	    return view('kasir.laporan.bulan', compact('bulanl','selectB', 'auth','data'));
+        return response()->json(['totalP' => $totalP, 'itemT' => $itemT]);
+    }
+    public function bulan_laporan() {
+        $auth = auth()->user();
 
-	}
+        $tahunTerbaru = now()->format('Y');
+        $data = Transaksi::selectRaw('YEAR(tanggal_pembayaran) as tahun')
+            ->selectRaw('SUM(total_pembayaran) as total_pembayaran, MONTHNAME(tanggal_pembayaran) as nama_bulan')
+            ->selectRaw('SUM(item_transaksi.quantity) as total_quantity')
+            ->join('item_transaksi', 'transaksi.id', '=', 'item_transaksi.transaksi_id')
+            ->whereYear('tanggal_pembayaran', $tahunTerbaru)
+            ->groupBy('tahun','nama_bulan')
+            ->get();
+
+        return view('kasir.laporan.bulan', compact('auth', 'data'));
+    }
+    public function filter_bulanan_laporan(Request $request) {
+        $auth = auth()->user();
+
+        $selectedDate = Carbon::createFromFormat('m Y', $request->date);
+
+        $data = Transaksi::selectRaw('MONTH(tanggal_pembayaran) as bulan, YEAR(tanggal_pembayaran) as tahun')
+            ->selectRaw('SUM(total_pembayaran) as total_pembayaran, MONTHNAME(tanggal_pembayaran) as nama_bulan')
+            ->selectRaw('SUM(item_transaksi.quantity) as total_quantity')
+            ->join('item_transaksi', 'transaksi.id', '=', 'item_transaksi.transaksi_id')
+            ->whereYear('tanggal_pembayaran', $selectedDate->year)
+            ->whereMonth('tanggal_pembayaran', $selectedDate->month)
+            ->groupBy('tahun', 'bulan', 'nama_bulan')
+            ->get();
+
+        return view('kasir.laporan.bulan', compact('selectedDate', 'auth', 'data'));
+    }
 
 	public function harian_laporan() {
 	    $auth = auth()->user();
@@ -714,5 +760,12 @@ class KawalController extends Controller
 	    
 	    return view('kasir.laporan.tahunan', compact('tahunan', 'selectT', 'auth', 'tahunl'));
 	}
+
+    public function profile_v()
+    {
+        $auth = auth()->user();
+
+        return view('kasir.user.profile', compact('auth'));
+    }
 
 }

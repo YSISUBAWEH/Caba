@@ -20,28 +20,11 @@ class MawalController extends Controller
     public function index() {
         $auth = auth()->user();
         $user = User::all();
+        $suplayer = Suplayer::all();
         $item = Item::all();
         $transaksi = Transaksi::with('menus','user')->get();
-        $pendapatanB = Transaksi::whereBetween('created_at', [
-            Carbon::now()->startOfMonth(),
-            Carbon::now()->endOfMonth()
-        ])
-        ->selectRaw('SUM(total_pembayaran) as total_pembayaran')
-        ->get();
-        $pendapatanH = Transaksi::whereBetween('created_at', [
-            Carbon::now()->startOfWeek(),
-            Carbon::now()->endOfWeek()
-        ])
-        ->selectRaw('SUM(total_pembayaran) as total_pembayaran')
-        ->get();
-        $pendapatanY = Transaksi::whereBetween('created_at', [
-            Carbon::now()->startOfYear(),
-            Carbon::now()->endOfYear()
-        ])
-        ->selectRaw('SUM(total_pembayaran) as total_pembayaran')
-        ->get();
-
-        return view('manager.index',compact('auth','item','user','transaksi','pendapatanH','pendapatanB','pendapatanY'));
+      
+        return view('manager.index',compact('auth','item','user','transaksi','suplayer'));
     }
     public function transaksi(){
 	    $auth=auth()->user();

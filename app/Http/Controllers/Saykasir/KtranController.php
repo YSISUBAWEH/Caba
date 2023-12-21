@@ -7,17 +7,20 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Transaksi;
 use App\Models\SKeluar;
+use App\Models\Kategori;
+use Illuminate\Support\Facades\Session;
 
 class KtranController extends Controller
 {
     //transaki
 public function transaksi(){
     $item = Item::all();
+    $kategori = Kategori::with('item')->get();
     $auth = auth()->user();
     $nota = "TRXBC-" . date("YmdHis");
     // session()->forget('Tcart');
     return view('kasir.transaksi.index')->with([
-        'item' => $item,'auth' => $auth,'nota' => $nota,
+        'item' => $item,'auth' => $auth,'nota' => $nota,'kategori'=> $kategori
     ]);
 }
 public function addCart_transaksi(Request $request)
@@ -86,11 +89,18 @@ public function addCart_transaksi(Request $request)
         }
 
         $uangPembayaran = $request->input('money-price');
+        $uangPembayaran = (int) str_replace('.', '', $uangPembayaran);
         $kembalian = $uangPembayaran - $totalPrice;
+
+        $currentDate = now()->format('Ymd');
+
+        $trxCount = Transaksi::whereDate('created_at', today())->count() + 1;
+        $formattedCount = sprintf('%04d', $trxCount);
+        $id = "TRX-" . $currentDate . $formattedCount;
 
         // Simpan data transaksi ke dalam tabel
         $transaksi = new Transaksi();
-        $transaksi->id = "TRX-" . date("YmdHis");
+        $transaksi->id = $id;
         $transaksi->total_pembayaran = $totalPrice;
         $transaksi->uang_pembayaran = $uangPembayaran;
         $transaksi->kembalian = $kembalian;
@@ -110,8 +120,13 @@ public function addCart_transaksi(Request $request)
             $item->stok -= $details['quantity'];
             $item->save();
 
+            $currentDate = now()->format('Ymd');
+            $stokKeluarCount = SKeluar::whereDate('created_at', today())->count() + 1;
+            $formattedCount = sprintf('%04d', $stokKeluarCount);
+            $idS = "SK-" . $currentDate . $formattedCount;
+
             $stokK = SKeluar::create([
-                'id' => "SKBC-" . date("YmdHis"),
+                'id' => $idS,
                 'item_id' => $id,
                 'users_id' => auth()->user()->id,
                 'stok' => $details['quantity'],
@@ -137,11 +152,17 @@ public function addCart_transaksi(Request $request)
         }
 
         $uangPembayaran = $request->input('money-price');
+        $uangPembayaran = (int) str_replace('.', '', $uangPembayaran);
         $kembalian = $uangPembayaran - $totalPrice;
 
+        $currentDate = now()->format('Ymd');
+
+        $trxCount = Transaksi::whereDate('created_at', today())->count() + 1;
+        $formattedCount = sprintf('%04d', $trxCount);
+        $id = "TRX-" . $currentDate . $formattedCount;
         // Simpan data transaksi ke dalam tabel
         $transaksi = new Transaksi();
-        $transaksi->id = $request->input('nota');
+        $transaksi->id = $id;
         $transaksi->total_pembayaran = $totalPrice;
         $transaksi->uang_pembayaran = $uangPembayaran;
         $transaksi->kembalian = $kembalian;
@@ -161,8 +182,13 @@ public function addCart_transaksi(Request $request)
             $item->stok -= $details['quantity'];
             $item->save();
 
+            $currentDate = now()->format('Ymd');
+            $stokKeluarCount = SKeluar::whereDate('created_at', today())->count() + 1;
+            $formattedCount = sprintf('%04d', $stokKeluarCount);
+            $idS = "SK-" . $currentDate . $formattedCount;
+
             $stokK = SKeluar::create([
-                'id' => "SKBC-" . date("YmdHis"),
+                'id' => $idS,
                 'item_id' => $id,
                 'users_id' => auth()->user()->id,
                 'stok' => $details['quantity'],
@@ -172,7 +198,7 @@ public function addCart_transaksi(Request $request)
         // Hapus cart setelah checkout
         session()->forget('Tcart');
         
-        return redirect()->route('K.V.T')->with('success', 'Checkout berhasil!');
+        return redirect()->route('K.V.T')->with('successT', 'Transaksi Penjualan Berhasil');
 
         }
 }
@@ -180,9 +206,25 @@ public function addCart_transaksi(Request $request)
 public function riwayat_transaksi(){
     $auth=auth()->user();
     $data= Transaksi::with('menus')->orderBy('tanggal_pembayaran', 'desc')->get();
+ 
     return view('kasir.transaksi.riwayat',compact('auth','data'));
 }
-function struk_riwayat() {
+    public function detail_transaksi(Request $request) {
+            $id = $request->id;
+        $me = Transaksi::with('menus')->find($id);
+
+        if ($me) {
+            return response()->json($me);
+        } else {
+            return response()->json(['error' => 'Transaksi not found.'], 404);
+        }
+    }
+    public function removeSessionRwt()
+{
+     Session::forget('rwt');
+    return response()->json(['message' => 'Session rwt deleted']);
+}
+    public function struk_riwayat() {
     $auth = auth()->user();
     return view('kasir.print',compact('auth'));
 }

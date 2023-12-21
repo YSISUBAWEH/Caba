@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
     Route::post('/owner/data-user/update', [MuserController::class, 'update_user'])->name('M.U.user');
   
     //laporan
+    Route::get('/owner/data-laporan/profit', [MawalController::class, 'profit_laporan'])->name('M.P.L');
     Route::get('/owner/data-laporan/bulanan', [MawalController::class, 'bulan_laporan'])->name('M.B.L');
     Route::get('/owner/data-laporan/harian', [MawalController::class, 'harian_laporan'])->name('M.H.L');
     Route::post('/owner/data-laporan/bulanan/filter', [MawalController::class, 'filter_bulanan_laporan'])->name('M.F.LB');
@@ -86,6 +87,7 @@ Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
     Route::delete('/kasir/data-item/delete', [KawalController::class, 'delete_item'])->name('K.D.item');
     Route::get('/kasir/data-item/edit', [KawalController::class, 'edit_item'])->name('K.E.item');
     Route::post('/kasir/data-item/update', [KawalController::class, 'update_item'])->name('K.U.item');
+    Route::get('/kasir/data-item/print-pdf', [KawalController::class, 'print_item'])->name('K.PDF.item');
 
     //stok
     Route::get('/kasir/data-suplayer', [KawalController::class, 'suplay'])->name('K.suplay');
@@ -114,9 +116,16 @@ Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
     Route::patch('/kasir/transaksi/update-cart', [KtranController::class, 'update_transaksi'])->name('K.U.C');
     Route::delete('/kasir/transaksi/remove-from-cart', [KtranController::class, 'remove_transaksi'])->name('K.R.C');
     Route::post('/kasir/transaksi/selesai', [KtranController::class, 'selesai_transaksi'])->name('K.T.S');
-    Route::get('/kasir/riwayat-transaksi', [KtranController::class ,'riwayat_transaksi'])->name('K.R.T');
-    Route::get('/kasir/riwayat-transaksi/struk/{nomor_transaksi}', [KtranController::class, 'struk_riwayat'])->name('K.S');
+    Route::post('/kasir/transaksi/remove-session', [KtranController::class, 'removeSessionrwt'])->name('K.R.session');
+    Route::get('/kasir/riwayat-penjualan', [KtranController::class ,'riwayat_transaksi'])->name('K.R.T');
+    Route::get('/kasir/riwayat-penjualan/Detail', [KtranController::class ,'detail_transaksi'])->name('K.V.rwt');
+    Route::get('/kasir/riwayat-penjualan/struk/{nomor_transaksi}', [KtranController::class, 'struk_riwayat'])->name('K.S');
+
+    //profile
+    Route::get('/kasir/user-profile', [KawalController::class, 'profile_v'])->name('K.V.UP');
     //laporan
+    Route::get('/kasir/data-laporan/profit', [KawalController::class, 'profit_laporan'])->name('K.P.L');
+    Route::post('/kasir/data-laporan/profit/f', [KawalController::class, 'filter_profit_laporan'])->name('K.F.LP');
     Route::get('/kasir/data-laporan/bulanan', [KawalController::class, 'bulan_laporan'])->name('K.B.L');
     Route::get('/kasir/data-laporan/harian', [KawalController::class, 'harian_laporan'])->name('K.H.L');
     Route::post('/kasir/data-laporan/bulanan/filter', [KawalController::class, 'filter_bulanan_laporan'])->name('K.F.LB');

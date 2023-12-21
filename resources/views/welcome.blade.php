@@ -64,8 +64,13 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
-                            <a class="d-flex navbar-brand" href="index.html">
-                                <img src="{{asset('arsip/admin/images/welogo.png')}}"alt="Logo">
+                            <a class="d-flex navbar-brand" href="{{route('login')}}">
+                                <span class="logo-lg">
+                                    <img src="{{asset('arsip/template/assets/images/1.png')}}" width="50" alt="logo">
+                                </span>
+                                <span class="logo-sm">
+                                    <img src="{{asset('arsip/template/assets/images/wl.png')}}" width="150" alt="small logo">
+                                </span>
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="toggler-icon"></span>
